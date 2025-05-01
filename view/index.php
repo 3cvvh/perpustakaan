@@ -1,8 +1,13 @@
 <?php
-include '../logic/function.php';
 session_start();
-if(!isset($_SESSION["login"])){
+include '../logic/function.php';
+if(!isset($_SESSION['login'])){
     header("Location: login.php");
+    exit;
+}
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'petugas') {
+    header("Location: katalog.php");
+    exit;
 }
 $user = select("SELECT * FROM user");
 $admin_name = isset($_SESSION['admin_name']) ? $_SESSION['admin_name'] : 'Guest';

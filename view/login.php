@@ -1,6 +1,6 @@
 <?php
-include '../logic/function.php';
 session_start();
+include '../logic/function.php';
 if (!isset($_SESSION['lupa'])) {
     $_SESSION['lupa'] = 0;
 }
@@ -12,8 +12,17 @@ if(isset($_POST['submit'])){
     if(mysqli_num_rows($result) > 0){
         if(password_verify($password, $row['password'])){
             $_SESSION['admin_name'] = $row['username'];
-            $_SESSION["login"] = true;
-            header("Location: index.php");
+            $_SESSION["role"] = $row["role"];
+            if ($row['role'] === 'admin') {
+                $_SESSION['login'] = true;
+                header("Location: index.php"); // Redirect ke halaman admin
+            } elseif ($row['role'] === 'petugas') {
+                $_SESSION['login'] = true;
+                header("Location: index.php"); // Redirect ke halaman petugas
+            } elseif ($row['role'] === 'peminjam') {
+                $_SESSION['login'] = true;
+                header("Location: katalog.php"); // Redirect ke halaman peminjam
+            }
             exit;
         }
        $error=true;
