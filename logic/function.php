@@ -25,6 +25,10 @@ function sign($post_data){
         echo "<script>alert('Email sudah terdaftar!');</script>";
         return false;
     }
+    if($email === $row["email"]){
+        echo "<script>alert('Email sudah terdaftar!');</script>";
+        return false;
+    }
     $password = password_hash($password, PASSWORD_DEFAULT);
     $query_insert = "INSERT INTO user VALUES('','$username', '$password', '$email', '$nama_lengkap', '$alamat','peminjam')";
     mysqli_query($db, $query_insert);
@@ -53,4 +57,19 @@ function select($data){
         $rows[] = $row;
     }return $rows;
 }
+function edit($data_post){
+    global $db;
+    $id = $data_post["id"];
+    $nama_lengkap = $data_post["nama"];
+    $email = $data_post["email"]; 
+    $alamat = $data_post["alamat"];
+    $query = "UPDATE user SET NamaLengkap = '$nama_lengkap', Email = '$email', Alamat = '$alamat' WHERE UserID = $data_post[id]";
+    mysqli_query($db, $query);
+    return mysqli_affected_rows($db);
+    }
+function hapus($id){
+    global $db;
+    mysqli_query($db, "DELETE from user where UserID = $id");
+    return mysqli_affected_rows($db);
+    }
 ?>
