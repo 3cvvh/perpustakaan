@@ -1,5 +1,5 @@
 <?php
-$db  = mysqli_connect('localhost', 'root', '', 'perpus');
+$db  = mysqli_connect('localhost', 'root', '', 'perpustakaan');
 
 function sign($post_data){
     global $db;
@@ -26,7 +26,7 @@ function sign($post_data){
         return false;
     }
     $password = password_hash($password, PASSWORD_DEFAULT);
-    $query_insert = "INSERT INTO user VALUES('','$username', '$password', '$email', '$nama_lengkap', '$alamat')";
+    $query_insert = "INSERT INTO user VALUES('','$username', '$password', '$email', '$nama_lengkap', '$alamat','peminjam')";
     mysqli_query($db, $query_insert);
     return mysqli_affected_rows($db);
 }

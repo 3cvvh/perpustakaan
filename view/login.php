@@ -7,11 +7,11 @@ if (!isset($_SESSION['lupa'])) {
 if(isset($_POST['submit'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $result = mysqli_query($db, "SELECT * FROM user WHERE username = '$username'");
+    $result = mysqli_query($db, "SELECT * FROM user WHERE Username = '$username'");
     $row = mysqli_fetch_assoc($result);
     if(mysqli_num_rows($result) > 0){
-        if(password_verify($password, $row['password'])){
-            $_SESSION['admin_name'] = $row['username'];
+        if(password_verify($password, $row['Password'])){
+            $_SESSION['admin_name'] = $row['NamaLengkap'];
             $_SESSION["role"] = $row["role"];
             if ($row['role'] === 'admin') {
                 $_SESSION['login'] = true;

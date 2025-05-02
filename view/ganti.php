@@ -13,7 +13,7 @@ if(isset($_POST["submit"])){
     }
     if($password === $confirm_password && $password !== $nick["password"]){
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $query = "UPDATE user SET password = '$password' WHERE email = '$email'";
+        $query = "UPDATE user SET password = '$password' WHERE Email = '$email'";
         mysqli_query($db, $query);
         echo "<script>alert('Password berhasil diubah!');</script>";
         header("Location: login.php");
@@ -29,7 +29,7 @@ if(isset($_POST["submit"])){
     <title></title>
 </head>
 <body>
-    <h1>nickname anda:<?php echo $nick["username"]; ?></h1>
+    <h1>nickname anda:<?php echo $nick["Username"]; ?></h1>
     <form action="" method="post">
         <label for="password">Password:</label><br>
         <input type="password" id="password" name="password" required><br><br>

@@ -37,7 +37,7 @@ $admin_name = isset($_SESSION['admin_name']) ? $_SESSION['admin_name'] : 'Guest'
                     <?php foreach ($user as $u): ?>
                     <tr class="hover:bg-orange-100">
                         <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["NamaLengkap"]; ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["email"]; ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Email"]; ?></td>
                         <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Alamat"]; ?></td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <a href="#" class="text-blue-500 hover:underline">Edit</a> |
