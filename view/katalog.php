@@ -5,6 +5,13 @@ if(!isset($_SESSION['login'])){
     header("Location: login.php");
     exit;
 }
+$buku = select("
+    SELECT buku.*, kategoribuku.NamaKategori 
+    FROM buku
+    LEFT JOIN kategoribuku_relasi ON buku.BukuID = kategoribuku_relasi.BukuID
+    LEFT JOIN kategoribuku ON kategoribuku_relasi.KategoriID = kategoribuku.KategoriID
+");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,10 +22,9 @@ if(!isset($_SESSION['login'])){
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-white min-h-screen flex flex-col">
-    <!-- Header -->
     <div class="w-full bg-white shadow flex items-center justify-between px-8 py-4">
         <div class="flex items-center gap-2">
-            <img src="../assets/logo.png" alt="Logo" class="h-8 w-8" />
+        <img src="img/Logo.png" alt="Logo" class="h-16 w-16" />
             <span class="font-bold text-lg text-blue-900">PERPUSTAKAAN DIGITAL</span>
         </div>
         <div class="flex gap-8">
@@ -32,7 +38,6 @@ if(!isset($_SESSION['login'])){
             <button class="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700"><a href="destroy.php">logout</a></button>
         </div>
     </div>
-    <!-- Banner -->
     <div class="w-full bg-gradient-to-r from-blue-200 to-pink-200 py-12 px-8 flex flex-col items-center relative">
         <h2 class="text-4xl font-light text-white mb-2">Satu halaman saja</h2>
         <p class="text-white text-lg mb-6">akan membuatmu lebih pintar setiap hari nya</p>
@@ -41,32 +46,20 @@ if(!isset($_SESSION['login'])){
             <button class="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800">Search</button>
         </form>
     </div>
-    <!-- Section Fantasy -->
     <div class="px-8 mt-8">
-        <div class="text-lg font-semibold mb-4 text-blue-900">Fantasy</div>
+        <div class="text-lg font-semibold mb-4 text-blue-900"></div>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-            <!-- Contoh buku, nanti bisa di-loop dari database -->
-            <div class="flex flex-col items-center bg-white shadow rounded p-4">
-                <img src="cover1.jpg" alt="Buku 1" class="w-28 h-40 object-cover rounded mb-2" />
-                <div class="font-medium text-center mb-2">Judul Buku</div>
-                <button class="bg-blue-700 text-white px-4 py-1 rounded hover:bg-blue-800 w-full">pinjam</button>
-            </div>
-            <!-- ... -->
+    <?php foreach($buku as $b): ?>
+    <div class="flex flex-col items-center bg-white shadow rounded p-4">
+        <img src="img/<?= htmlspecialchars($b['Foto']); ?>" alt="<?= htmlspecialchars($b['Judul']); ?>" class="w-28 h-40 object-cover rounded mb-2" />
+        <div class="font-medium text-center mb-1"><?= htmlspecialchars($b['Judul']); ?></div>
+        <div class="text-xs text-gray-500 mb-2"><?= htmlspecialchars($b['NamaKategori']); ?></div>
+        <button class="bg-blue-700 text-white px-4 py-1 rounded hover:bg-blue-800 w-full">pinjam</button>
+    </div>
+    <?php endforeach; ?>
+</div>
         </div>
     </div>
-    <!-- Section Buku Trending -->
-    <div class="px-8 mt-10">
-        <div class="text-lg font-semibold mb-4 text-blue-900">Buku Trending</div>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-            <div class="flex flex-col items-center bg-white shadow rounded p-4">
-                <img src="cover3.jpg" alt="Buku 3" class="w-28 h-40 object-cover rounded mb-2" />
-                <div class="font-medium text-center mb-2">Judul Buku</div>
-                <button class="bg-blue-700 text-white px-4 py-1 rounded hover:bg-blue-800 w-full">pinjam</button>
-            </div>
-            <!-- ... -->
-        </div>
-    </div>
-    <!-- Footer -->
     <div class="mt-auto w-full bg-blue-900 text-white text-center py-4">
         &copy; 2025 perpustakaan digital | Powered by perpustakaan digital
         <div class="mt-2 flex justify-center gap-4">
@@ -76,7 +69,6 @@ if(!isset($_SESSION['login'])){
             <a href="#" class="hover:text-blue-300"><i class="fab fa-instagram"></i></a>
         </div>
     </div>
-    <!-- Font Awesome for icons (optional) -->
     <script src="https://kit.fontawesome.com/yourkitid.js" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-$db  = mysqli_connect('localhost', 'root', '', 'perpustakaan');
+$db  = mysqli_connect('localhost', 'root', '', 'perpus_chan');
 
 function sign($post_data){
     global $db;
@@ -21,11 +21,7 @@ function sign($post_data){
     }
     $result = mysqli_query($db, "SELECT email from user where email = '$email'");
     $row = mysqli_fetch_assoc($result);
-    if($row === $email) {
-        echo "<script>alert('Email sudah terdaftar!');</script>";
-        return false;
-    }
-    if($email === $row["email"]){
+    if(mysqli_num_rows($result) > 0) {
         echo "<script>alert('Email sudah terdaftar!');</script>";
         return false;
     }
@@ -71,5 +67,54 @@ function hapus($id){
     global $db;
     mysqli_query($db, "DELETE from user where UserID = $id");
     return mysqli_affected_rows($db);
+    }
+    function tambah_buku($data_post){
+        global $db;
+        $judul = htmlspecialchars($data_post["Judul"]);
+        $pengarang = htmlspecialchars($data_post["Penulis"]);
+        $penerbit = htmlspecialchars($data_post["Penerbit"]);
+        $tahun = htmlspecialchars($data_post["TahunTerbit"]);
+        $kategori_id = intval($data_post["KategoriID"]);
+        $uploud_gambar = uploud($_FILES);
+        if(!$uploud_gambar){
+            return false;
+        }
+        // Insert buku
+        $query = "INSERT INTO buku VALUES('','$judul','$pengarang','$penerbit','$tahun','$uploud_gambar')";
+        mysqli_query($db, $query);
+    
+        // Ambil ID buku terakhir yang baru dimasukkan
+        $buku_id = mysqli_insert_id($db);
+    
+        $query_relasi = "INSERT INTO kategoribuku_relasi (KategoriID, BukuID) VALUES ('$kategori_id', '$buku_id')";
+        mysqli_query($db, $query_relasi);
+    
+        return mysqli_affected_rows($db);
+    }
+    function uploud($gambar){
+        $nama_gambar = $gambar["Foto"]["name"];
+        $lokasi_gambar = $gambar["Foto"]["tmp_name"];
+        $error = $gambar["Foto"]["error"];
+        $ukuran_gambar = $gambar["Foto"]["size"];
+        $gambar_valid = ['jpg','jfif','png','jpeg'];
+        $ekstensi_gambar = explode('.',$nama_gambar);
+        $ekstensi_gambar = strtolower(end($ekstensi_gambar));
+        if(!in_array($ekstensi_gambar, $gambar_valid)){
+            echo "<script>alert('yang anda uploud bukan gambar!');</script>";
+            return false;
+        }
+        $nama_gambar_baru = uniqid();
+        $nama_gambar_baru .= '.';
+        $nama_gambar_baru .= $ekstensi_gambar;
+        move_uploaded_file($lokasi_gambar, 'img/' . $nama_gambar_baru);
+        return $nama_gambar_baru;
+    }
+    function hapus_buku($id){
+        global $db;
+        // Hapus relasi kategori
+        mysqli_query($db, "DELETE FROM kategoribuku_relasi WHERE BukuID = $id");
+        // Baru hapus buku
+        mysqli_query($db, "DELETE FROM buku WHERE BukuID = $id");
+        return mysqli_affected_rows($db);
     }
 ?>
