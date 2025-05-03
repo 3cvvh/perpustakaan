@@ -11,16 +11,19 @@ if(isset($_POST['submit'])){
     $row = mysqli_fetch_assoc($result);
     if(mysqli_num_rows($result) > 0){
         if(password_verify($password, $row['Password'])){
-            $_SESSION['admin_name'] = $row['NamaLengkap'];
+            $_SESSION['name'] = $row['NamaLengkap'];
             $_SESSION["role"] = $row["role"];
             if ($row['role'] === 'admin') {
                 $_SESSION['login'] = true;
+                $_SESSION['UserID'] = $row['UserID'];
                 header("Location: index.php"); // Redirect ke halaman admin
             } elseif ($row['role'] === 'petugas') {
                 $_SESSION['login'] = true;
+                $_SESSION['UserID'] = $row['UserID'];
                 header("Location: index.php"); // Redirect ke halaman petugas
             } elseif ($row['role'] === 'peminjam') {
                 $_SESSION['login'] = true;
+                $_SESSION['UserID'] = $row['UserID'];
                 header("Location: katalog.php"); // Redirect ke halaman peminjam
             }
             exit;

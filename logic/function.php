@@ -1,6 +1,5 @@
 <?php
 $db  = mysqli_connect('localhost', 'root', '', 'perpus_chan');
-
 function sign($post_data){
     global $db;
     $username = htmlspecialchars($post_data['username']);
@@ -74,13 +73,15 @@ function hapus($id){
         $pengarang = htmlspecialchars($data_post["Penulis"]);
         $penerbit = htmlspecialchars($data_post["Penerbit"]);
         $tahun = htmlspecialchars($data_post["TahunTerbit"]);
+        $halaman = htmlspecialchars($data_post["Halaman"]);
         $kategori_id = intval($data_post["KategoriID"]);
         $uploud_gambar = uploud($_FILES);
+        $deskripsi = htmlspecialchars($data_post["Deskripsi"]);
         if(!$uploud_gambar){
             return false;
         }
         // Insert buku
-        $query = "INSERT INTO buku VALUES('','$judul','$pengarang','$penerbit','$tahun','$uploud_gambar')";
+        $query = "INSERT INTO buku VALUES('','$judul','$halaman','$pengarang','$penerbit','$tahun','$uploud_gambar','$deskripsi')";
         mysqli_query($db, $query);
     
         // Ambil ID buku terakhir yang baru dimasukkan
@@ -115,6 +116,27 @@ function hapus($id){
         mysqli_query($db, "DELETE FROM kategoribuku_relasi WHERE BukuID = $id");
         // Baru hapus buku
         mysqli_query($db, "DELETE FROM buku WHERE BukuID = $id");
+        return mysqli_affected_rows($db);
+    }
+    function cari($keyword){
+        $query =  "SELECT buku.*, kategoribuku.NamaKategori 
+        FROM buku
+        LEFT JOIN kategoribuku_relasi ON buku.BukuID = kategoribuku_relasi.BukuID
+        LEFT JOIN kategoribuku ON kategoribuku_relasi.KategoriID = kategoribuku.KategoriID
+        WHERE buku.Judul LIKE '%$keyword%'
+        OR buku.Penulis LIKE '%$keyword%'
+        OR buku.Penerbit LIKE '%$keyword%'
+        OR kategoribuku.NamaKategori LIKE '%$keyword%'";
+        return select($query);
+    }
+    function tambah_ulasan($data_post){
+        global $db;
+        $ulasan = mysqli_real_escape_string($db, $_POST['komen']);
+        $rating = intval($_POST['rating']);
+        $user_id = $_SESSION["UserID"];
+        $buku_id = intval($_GET["id_buku"]);
+        $query = "INSERT INTO ulasanbuku (UserID, BukuID, Ulasan, Rating) VALUES ('$user_id', '$buku_id', '$ulasan', '$rating')";
+        mysqli_query($db, $query);
         return mysqli_affected_rows($db);
     }
 ?>

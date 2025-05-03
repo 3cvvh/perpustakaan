@@ -52,6 +52,10 @@ if(isset($_POST["submit"])){
         <input class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" type="number" name="TahunTerbit" id="TahunTerbit" required>
     </div>
     <div class="mb-4">
+        <label class="block text-gray-700 mb-2" for="Halaman">Jumlah Halaman</label>
+        <input class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" type="number" name="Halaman" id="Halaman" min="1" required>
+    </div>
+    <div class="mb-4">
         <label class="block text-gray-700 mb-2" for="KategoriID">Kategori</label>
         <select class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" name="KategoriID" id="KategoriID" required>
             <option value="">Pilih Kategori</option>
@@ -59,6 +63,10 @@ if(isset($_POST["submit"])){
                 <option value="<?= $k['KategoriID']; ?>"><?= htmlspecialchars($k['NamaKategori']); ?></option>
             <?php endforeach; ?>
         </select>
+    </div>
+    <div class="mb-4">
+        <label class="block text-gray-700 mb-2" for="Deskripsi">Deskripsi</label>
+        <textarea class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" name="Deskripsi" id="Deskripsi" rows="4" required></textarea>
     </div>
     <div class="mb-4">
         <label class="block text-gray-700 mb-2" for="Foto">Foto</label>

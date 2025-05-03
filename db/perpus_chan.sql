@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Bulan Mei 2025 pada 15.15
+-- Waktu pembuatan: 03 Bulan Mei 2025 pada 18.27
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `perpustakaan`
+-- Database: `perpus_chan`
 --
 
 -- --------------------------------------------------------
@@ -30,9 +30,12 @@ SET time_zone = "+00:00";
 CREATE TABLE `buku` (
   `BukuID` int(11) NOT NULL,
   `Judul` varchar(255) DEFAULT NULL,
+  `halaman` int(11) DEFAULT NULL,
   `Penulis` varchar(255) DEFAULT NULL,
   `Penerbit` varchar(255) DEFAULT NULL,
-  `TahunTerbit` int(11) DEFAULT NULL
+  `TahunTerbit` int(11) DEFAULT NULL,
+  `Foto` varchar(255) DEFAULT NULL,
+  `Deskripsi` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

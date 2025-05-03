@@ -10,7 +10,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin' && $_SESSION['rol
     exit;
 }
 $user = select("SELECT * FROM user");
-$admin_name = isset($_SESSION['admin_name']) ? $_SESSION['admin_name'] : 'Guest';
+$admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
 ?>
 <!DOCTYPE html>
 <html lang="en">
