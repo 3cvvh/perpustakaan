@@ -14,6 +14,11 @@ if(isset($_POST['submit'])) {
 }
 $peminjam_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
 $id_buku = $_GET["id_buku"];
+$kategori = select("SELECT kb.NamaKategori 
+    FROM kategoribuku_relasi kr
+    JOIN kategoribuku kb ON kr.KategoriID = kb.KategoriID
+    WHERE kr.BukuID = $id_buku");
+    $data_kate['NamaKategori'] = array_column($kategori, 'NamaKategori');
 $data_buku = select("SELECT * FROM buku WHERE BukuID = $id_buku")[0];
 $comments = select("SELECT u.Ulasan, u.Rating, us.Username as user 
     FROM ulasanbuku u 
@@ -27,7 +32,6 @@ if (!isset($data_buku['SudahPinjam'])) $data_buku['SudahPinjam'] = 0;
 if (!isset($data_buku['Penerbit'])) $data_buku['Penerbit'] = '-';
 if (!isset($data_buku['TahunTerbit'])) $data_buku['TahunTerbit'] = '-';
 if (!isset($data_buku['Halaman'])) $data_buku['Halaman'] = '-';
-if (!isset($data_buku['Kategori']) || !is_array($data_buku['Kategori'])) $data_buku['Kategori'] = ['Fiksi', 'Novel'];
 
 ?>
 <!DOCTYPE html>
@@ -90,8 +94,8 @@ if (!isset($data_buku['Kategori']) || !is_array($data_buku['Kategori'])) $data_b
                 <div class="border rounded p-2 text-center">
                     <div class="text-xs text-gray-500">kategori</div>
                     <div class="flex flex-wrap gap-1 justify-center">
-                        <?php foreach($data_buku['Kategori'] as $kat): ?>
-                            <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs"><?= htmlspecialchars($kat) ?></span>
+                        <?php foreach($data_kate['NamaKategori'] as $kat): ?>
+                            <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs"><?= ($kat) ?></span>
                         <?php endforeach; ?>
                     </div>
                 </div>
