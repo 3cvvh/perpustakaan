@@ -14,9 +14,9 @@ if (!isset($_SESSION['lupa'])) $_SESSION['lupa'] = 0;
 if(isset($_POST['submit'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $result = mysqli_query($db, "SELECT * FROM user WHERE Username = '$username'");
+    $result =  mysqli_query($db, "SELECT * FROM user WHERE username = '$username'");
     $row = mysqli_fetch_assoc($result);
-    if(mysqli_num_rows($result) > 0){
+    if($row > 0){
         if(password_verify($password, $row['Password'])){
             $_SESSION['name'] = $row['NamaLengkap'];
             $_SESSION["role"] = $row["role"];
@@ -46,14 +46,14 @@ if(isset($_POST['submit'])){
 </head>
 <body class="bg-[#1e1e1e] min-h-screen flex items-center justify-center">
     <div class="flex w-full max-w-4xl bg-white/10 rounded-xl overflow-hidden shadow-lg">
-        <!-- Left: Image & Title -->
-        <div class="hidden md:flex flex-col justify-center items-center w-1/2 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80');">
+
+        <div class="hidden md:flex flex-col justify-center items-center w-1/2 bg-cover bg-center" style="background-image: url('https://i.pinimg.com/736x/eb/f6/a7/ebf6a76ade9d70f00ee54b1d4b3e39f6.jpg');">
             <div class="bg-black/60 w-full h-full flex flex-col justify-center items-center p-8">
                 <h1 class="text-3xl md:text-4xl font-bold text-white mb-2 text-center">Perpustakaan Digital</h1>
                 <p class="text-white text-center">Buku Gerbang menuju Pengetahuan</p>
             </div>
         </div>
-        <!-- Right: Login Form -->
+    
         <div class="w-full md:w-1/2 bg-[#c2bab7] flex flex-col justify-center p-8">
             <h2 class="text-2xl font-bold mb-1 text-gray-800">Hello Again!</h2>
             <p class="mb-6 text-gray-600">Welcome Back</p>

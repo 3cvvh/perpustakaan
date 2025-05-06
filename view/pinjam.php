@@ -20,18 +20,11 @@ $kategori = select("SELECT kb.NamaKategori
     WHERE kr.BukuID = $id_buku");
     $data_kate['NamaKategori'] = array_column($kategori, 'NamaKategori');
 $data_buku = select("SELECT * FROM buku WHERE BukuID = $id_buku")[0];
-$comments = select("SELECT u.Ulasan, u.Rating, us.Username as user 
+$comments = select("SELECT u.Ulasan, u.Rating, us.NamaLengkap 
     FROM ulasanbuku u 
     JOIN user us ON u.UserID = us.UserID 
     WHERE u.BukuID = $id_buku
     ORDER BY u.UlasanID DESC");
-if (!isset($data_buku['Rating'])) $data_buku['Rating'] = 0;
-if (!isset($data_buku['RatingCount'])) $data_buku['RatingCount'] = 0;
-if (!isset($data_buku['InginPinjam'])) $data_buku['InginPinjam'] = 0;
-if (!isset($data_buku['SudahPinjam'])) $data_buku['SudahPinjam'] = 0;
-if (!isset($data_buku['Penerbit'])) $data_buku['Penerbit'] = '-';
-if (!isset($data_buku['TahunTerbit'])) $data_buku['TahunTerbit'] = '-';
-if (!isset($data_buku['Halaman'])) $data_buku['Halaman'] = '-';
 
 ?>
 <!DOCTYPE html>
@@ -104,10 +97,10 @@ if (!isset($data_buku['Halaman'])) $data_buku['Halaman'] = '-';
                 <div class="font-semibold mb-2">comments:</div>
                 <?php foreach($comments as $c): ?>
                 <div class="flex items-start gap-3 mb-4">
-                    <img src="https://ui-avatars.com/api/?name=<?= urlencode($c['user']) ?>" class="w-8 h-8 rounded-full border" alt="avatar" />
+                    <img src="https://ui-avatars.com/api/?name=<?= urlencode($c['NamaLengkap']) ?>" class="w-8 h-8 rounded-full border" alt="avatar" />
                     <div>
                         <div class="flex items-center gap-2">
-                            <span class="font-medium"><?= htmlspecialchars($c['user']) ?></span>
+                            <span class="font-medium"><?= htmlspecialchars($c['NamaLengkap']) ?></span>
                             <div class="flex">
                                 <?php foreach(range(1,5) as $i): ?>
                                     <svg class="w-4 h-4 <?= $i <= $c['Rating'] ? 'text-yellow-400' : 'text-gray-300' ?>" fill="currentColor" viewBox="0 0 20 20"><polygon points="10,1 12.59,7.36 19.51,7.36 13.97,11.63 16.56,17.99 10,13.72 3.44,17.99 6.03,11.63 0.49,7.36 7.41,7.36"/></svg>

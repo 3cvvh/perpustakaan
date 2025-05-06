@@ -62,7 +62,7 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
                         <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Alamat"]; ?></td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <a href="edit.php?id=<?php echo $u["UserID"];?>" class="text-blue-500 hover:underline">Edit</a> |
-                            <a href="hapus_buku.php?id=<?php echo $u["UserID"]; ?>" class="text-red-500 hover:underline" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Hapus</a>
+                            <a href="hapus.php?id=<?php echo $u["UserID"]; ?>" class="text-red-500 hover:underline" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Hapus</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>
