@@ -9,7 +9,10 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin' && $_SESSION['rol
     header("Location: katalog.php");
     exit;
 }
-$user = select("SELECT * FROM buku");
+$peminjaman = select("SELECT * FROM peminjaman 
+    INNER JOIN user ON peminjaman.UserID = user.UserID 
+    INNER JOIN buku ON peminjaman.BukuID = buku.BukuID
+    WHERE peminjaman.StatusPeminjaman = 'dipinjam'");
 $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
 ?>
 <!DOCTYPE html>
@@ -33,7 +36,7 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
                 </a>
                 <div class="hidden sm:-my-px sm:flex space-x-8 absolute left-4">
                     <a href="index.php" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">user</a>
-                    <a href="peminjaman_admin.php" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">peminjam</a>
+                    <a href="peminjaman.php" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">peminjam</a>
                     <a href="buku.php" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">buku</a>
                 </div>
                 <div class="flex items-center absolute right-4">
@@ -44,38 +47,33 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
         </div>
     </nav>
     <div class="container mx-auto p-6">
-    <div class="container mx-auto p-6">
-        <div class="mb-4">
-            <a href="tambah_buku.php" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-semibold transition">
-                + Tambah Buku
-            </a>
-        </div>
-        <div class="overflow-x-auto">
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
                 <thead class="bg-gray-200">
                     <tr>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Judul</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Penulis</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Penerbit</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">tahun terbit</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Aksi</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Nama Lengkap</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Tanggal Peminjaman</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">buku</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">status</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-                    <?php foreach ($user as $u): ?>
-                    <tr class="hover:bg-orange-100">
-                        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Judul"]; ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Penulis"]; ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Penerbit"]; ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["TahunTerbit"]; ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <a href="edit_buku.php?id=<?php echo $u["BukuID"]; ?>" class="text-blue-500 hover:underline">Edit</a> |
-                            <a href="hapus_buku.php?id=<?= $u["BukuID"]; ?>" class="text-red-500 hover:underline" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Hapus</a>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
+    <?php foreach ($peminjaman as $u): ?>
+    <tr class="hover:bg-orange-100">
+        <?php var_dump($u["StatusPeminjaman"]);?>
+        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["NamaLengkap"]; ?></td>
+        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["TanggalPeminjaman"]; ?></td>
+        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Judul"]; ?></td>
+        <td class="px-6 py-4 whitespace-nowrap">
+            <?php if($u["StatusPeminjaman"] === "dipinjam"): ?>
+                <span class="text-red-600 font-semibold">belum dikembalikan</span>
+            <?php else: ?>
+                <span class="text-green-600 font-semibold">dikembalikan</span>
+            <?php endif; ?>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</tbody>
             </table>
         </div>
     </div>

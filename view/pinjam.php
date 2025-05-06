@@ -69,7 +69,6 @@ if(isset($_POST['delete_ulasan'])) {
     <title>Detail Buku</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <div class="w-full bg-white shadow">
@@ -93,9 +92,8 @@ if(isset($_POST['delete_ulasan'])) {
     <div class="max-w-7xl mx-auto mt-8 flex flex-col md:flex-row gap-8">
         <div class="bg-white rounded shadow p-6 w-full md:w-80 flex flex-col items-center">
             <img src="img/<?= htmlspecialchars($data_buku['Foto']) ?>" alt="<?= htmlspecialchars($data_buku['Judul']) ?>" class="w-40 h-60 object-cover rounded mb-4 border" />
-            <a href="#" class="w-full bg-blue-700 text-white py-2 rounded mb-2 text-center hover:bg-blue-800 transition">pinjam</a>
-            <a href="#" class="w-full border border-blue-700 text-blue-700 py-2 rounded mb-4 text-center hover:bg-blue-50 transition">tambah ke koleksi</a>
-            <a href="#" class="w-full border border-blue-700 text-blue-700 py-2 rounded text-center hover:bg-blue-50 transition">review</a>
+            <a href="pinjam_buku.php?id=<?php echo $id_buku?>" class="w-full bg-blue-700 text-white py-2 rounded mb-2 text-center hover:bg-blue-800 transition">pinjam</a>
+            <a href="tambah_koleksi.php?id=<?php echo $id_buku ?>" class="w-full border border-blue-700 text-blue-700 py-2 rounded mb-4 text-center hover:bg-blue-50 transition">tambah ke koleksi</a>
         </div>
         <div class="flex-1 bg-white rounded shadow p-8">
             <?php if(!empty($alert)) echo $alert; ?>
