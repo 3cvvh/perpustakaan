@@ -180,4 +180,20 @@ function hapus($id){
     
         return mysqli_affected_rows($db);
     }
+    function hapus_ulasan($data_post){
+        $id = intval($data_post["ulasan_id"]);
+        global $db;
+
+        mysqli_query($db, "DELETE FROM ulasanbuku WHERE UlasanID = $id");
+        return mysqli_affected_rows($db);
+    }
+function edit_ulasan($data) {
+    global $db;
+    $ulasan_id = intval($data['ulasan_id']);
+    $ulasan = htmlspecialchars($data['komen']);
+    $rating = intval($data['rating']);
+    $query = "UPDATE ulasanbuku SET Ulasan='$ulasan', Rating=$rating WHERE UlasanID=$ulasan_id";
+    mysqli_query($db, $query);
+    return mysqli_affected_rows($db);
+}
 ?>
