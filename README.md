@@ -10,7 +10,7 @@ Repositori ini berisi proyek **Perpustakaan** yang dikembangkan oleh kelompok 5 
 - **Nafis**  
 
 ## Fitur Utama
-- [Tambahkan deskripsi fitur utama proyek Anda, contoh: Manajemen buku, Peminjaman & Pengembalian, dll.]
+- nanti.
 
 ## Cara Menjalankan
 1. Clone repositori ini:  
