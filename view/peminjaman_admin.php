@@ -60,7 +60,6 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
                 <tbody class="divide-y divide-gray-200">
     <?php foreach ($peminjaman as $u): ?>
     <tr class="hover:bg-orange-100">
-        <?php var_dump($u["StatusPeminjaman"]);?>
         <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["NamaLengkap"]; ?></td>
         <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["TanggalPeminjaman"]; ?></td>
         <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Judul"]; ?></td>
