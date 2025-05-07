@@ -11,7 +11,7 @@ if(isset($_POST["submit"])){
     if(peminjaman($id, $user_id) > 0){
         echo "<script>
                 alert('Buku berhasil dipinjam!');
-                document.location.href = 'katalog.php';
+                document.location.href = 'peminjaman_user.php';
               </script>";
     } elseif(peminjaman($id, $user_id) < 0) {
         echo "<script>

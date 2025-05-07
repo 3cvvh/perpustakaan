@@ -12,7 +12,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin' && $_SESSION['rol
 $peminjaman = select("SELECT * FROM peminjaman 
     INNER JOIN user ON peminjaman.UserID = user.UserID 
     INNER JOIN buku ON peminjaman.BukuID = buku.BukuID
-    WHERE peminjaman.StatusPeminjaman = 'dipinjam'");
+");
 $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
 ?>
 <!DOCTYPE html>

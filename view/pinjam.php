@@ -78,10 +78,9 @@ if(isset($_POST['delete_ulasan'])) {
                 <span class="font-bold text-lg text-blue-900">PERPUSTAKAAN DIGITAL</span>
             </div>
             <div class="flex gap-8">
-                <a href="katalog.php" class="text-blue-900 font-medium border-b-2 border-blue-700 pb-1">katalog</a>
-                <a href="#" class="text-blue-900 font-medium hover:border-b-2 hover:border-blue-700 pb-1">favorit</a>
-                <a href="#" class="text-blue-900 font-medium hover:border-b-2 hover:border-blue-700 pb-1">pinjaman</a>
-            </div>
+                <a href="katalog.php" class="text-blue-900 font-medium hover:border-b-2 hover:border-blue-700 pb-1">katalog</a>
+                <a href="koleksi.php" class="text-blue-900 font-medium hover:border-b-2 hover:border-blue-700 pb-1">favorit</a>
+                <a href="peminjaman_user.php" class="text-blue-900 font-medium hover:border-b-2 hover:border-blue-700 pb-1">peminjaman</a>
             <div class="flex items-center gap-4">
                 <span class="text-gray-700">hi <?php echo $peminjam_name; ?></span>
                 <img src="https://ui-avatars.com/api/?name=<?php echo $peminjam_name; ?>" class="rounded-full w-8 h-8 border" alt="avatar" />
