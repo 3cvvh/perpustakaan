@@ -18,7 +18,10 @@ if (!$user_id || !$buku_id) {
 // Cek apakah sudah ada di koleksi
 $cek = select("SELECT * FROM koleksipribadi WHERE UserID=$user_id AND BukuID=$buku_id");
 if ($cek) {
-    header("Location: view/pinjam.php?id_buku=$buku_id&koleksi=exists");
+  "<script>
+            alert('koleksi sudah ada!');
+            document.location.href = 'koleksi.php';
+          </script>";
     exit;
 }
 

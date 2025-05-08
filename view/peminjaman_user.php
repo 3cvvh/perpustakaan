@@ -63,7 +63,7 @@ $peminjaman = select("SELECT p.*, b.Judul, b.Foto
       <td class="border-t px-4 py-2"><?= $p['TanggalPengembalian'] ?></td>
       <td class="border-t px-4 py-2">
         <?php if($p['StatusPeminjaman'] == 'dipinjam'): ?>
-          <span class="inline-block bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Dipinjam</span>
+          <span class="inline-block bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs ">Dipinjam</span>
         <?php else: ?>
           <span class="inline-block bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Selesai</span>
         <?php endif; ?>

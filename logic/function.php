@@ -214,4 +214,9 @@ function kembalikan($data_post){
     mysqli_query($db, $query_update);
     return mysqli_affected_rows($db);
 }
+function hapus_koleksi($id){
+    global $db;
+    mysqli_query($db, "DELETE FROM koleksipribadi WHERE BukuID = $id");
+    return mysqli_affected_rows($db);
+}
 ?>
