@@ -4,8 +4,8 @@
 Repositori ini berisi proyek **Perpustakaan** yang dikembangkan oleh kelompok 5 sebagai bagian dari tugas PBL.
 
 ## Anggota Kelompok
-- **Aqil**  (PM)  
-- **Anggono** 
+- **Anggono**  (PM)  
+- **Aqil** 
 - **Khaura**  
 - **Nafis**  
 

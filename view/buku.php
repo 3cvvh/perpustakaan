@@ -33,7 +33,7 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
                 </a>
                 <div class="hidden sm:-my-px sm:flex space-x-8 absolute left-4">
                     <a href="index.php" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">user</a>
-                    <a href="peminjaman_admin.php" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">peminjam</a>
+                    <a href="peminjaman_admin.php" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">peminjaman</a>
                     <a href="buku.php" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">buku</a>
                 </div>
                 <div class="flex items-center absolute right-4">
