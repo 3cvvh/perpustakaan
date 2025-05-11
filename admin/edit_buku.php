@@ -1,6 +1,8 @@
 <?php
 $id = $_GET["id"];
-include '../logic/function.php';
+include '../logic/fungsi_select.php';
+include '../logic/fungsi_edit_buku.php';
+include '../logic/fungsi_uploud.php';
 $kategori = select("SELECT * FROM kategoribuku");
 $relasi = select("SELECT KategoriID FROM kategoribuku_relasi WHERE BukuID = $id");
 $KategoriID_sekarang = $relasi ? $relasi[0]['KategoriID'] : '';
@@ -72,7 +74,7 @@ if(isset($_POST["submit"])){
 <div class="mb-4">
     <label class="block text-gray-700 mb-2" for="Foto">Foto</label>
     <input class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" type="file" name="Foto" id="Foto" accept="image/*">
-        <img src="img/<?php echo htmlspecialchars($aduh_gantengnya['Foto']) ?>" alt="Preview Foto" class="mt-2 max-h-48 rounded shadow border">
+        <img src="../view/img/<?php echo htmlspecialchars($aduh_gantengnya['Foto']) ?>" alt="Preview Foto" class="mt-2 max-h-48 rounded shadow border">
 </div>
     <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" type="submit" name="submit">Simpan</button>
 </form>

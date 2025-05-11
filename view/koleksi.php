@@ -1,5 +1,7 @@
 <?php 
 include '../logic/function.php';
+include '../logic/fungsi_select.php';
+include '../logic/fungsi_hapus_koleksi.php';
 session_start();
 if (!isset($_SESSION['login'])) {
     header("Location: view/login.php");
@@ -11,7 +13,20 @@ FROM koleksipribadi
 JOIN buku ON koleksipribadi.BukuID = buku.BukuID
 WHERE koleksipribadi.UserID = $user_id;");
 $peminjam_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
-$success = isset($_GET['koleksi']) && $_GET['koleksi'] === 'success';
+if (isset($_GET['koleksi'])) {
+    if ($_GET['koleksi'] == 'success') {
+        echo "<script>alert('Berhasil menambahkan koleksi');</script>";
+    } elseif ($_GET['koleksi'] == 'error') {
+        echo "<script>alert('Gagal menambahkan koleksi');</script>";
+    }
+}
+    if (isset($_GET['koleksi'])) {
+        if ($_GET['koleksi'] == 'berhasil') {
+            echo "<script>alert('Berhasil menghapus koleksi');</script>";
+        } elseif ($_GET['koleksi'] == 'gagal') {
+            echo "<script>alert('Gagal menghapus koleksi');</script>";
+        }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

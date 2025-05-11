@@ -1,6 +1,8 @@
 <?php
 session_start();
-include '../logic/function.php';
+include '../logic/fungsi_tambah_buku.php';
+include '../logic/fungsi_select.php';
+include '../logic/fungsi_uploud.php';
 $kategori = select("SELECT * FROM kategoribuku");
 if(!isset($_SESSION["login"])){
     header("Location: login.php");
@@ -14,7 +16,6 @@ if(isset($_POST["submit"])){
     if(tambah_buku($_POST) > 0){
         echo "<script>
                 alert('Data berhasil ditambahkan!');
-                document.location.href = 'buku.php';
               </script>";
     } elseif(tambah_buku($_POST) < 0) {
         echo "<script>
@@ -29,7 +30,7 @@ if(isset($_POST["submit"])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>tambah_buku</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>

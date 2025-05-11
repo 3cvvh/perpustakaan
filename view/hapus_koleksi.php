@@ -1,5 +1,6 @@
 <?php
 $id = $_GET['id'];
+include '../logic/fungsi_hapus_koleksi.php';
 session_start();
 include '../logic/function.php';
 if (!isset($_SESSION['login'])) {
@@ -12,12 +13,10 @@ if (!$user_id || !$id) {
     exit;
 }
 if( hapus_koleksi($id) > 0){
-    echo "<script>alert('koleksi berhasil dihapus!');</script>";
-    header("Location: koleksi.php?koleksi=success");
+    header("Location: koleksi.php?koleksi=berhasil");
     exit;
 }else{
-    echo "<script>alert('koleksi gagal dihapus!');</script>";
-    header("Location: koleksi.php?koleksi=error");
+    header("Location: koleksi.php?koleksi=gagal");
     exit;
 }
 ?>

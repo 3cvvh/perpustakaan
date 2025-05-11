@@ -1,5 +1,6 @@
 <?php
 include '../logic/function.php';
+include '../logic/sign.php';
 if(isset($_POST['submit'])){
     if(sign($_POST) > 0){
         echo "<script>alert('User baru berhasil ditambahkan!');window.location='login.php';</script>";

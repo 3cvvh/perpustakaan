@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../logic/function.php';
+include '../logic/fungsi_select.php';
 if(!isset($_SESSION['login'])){
     header("Location: login.php");
     exit;
@@ -9,10 +9,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin' && $_SESSION['rol
     header("Location: katalog.php");
     exit;
 }
-$peminjaman = select("SELECT * FROM peminjaman 
-    INNER JOIN user ON peminjaman.UserID = user.UserID 
-    INNER JOIN buku ON peminjaman.BukuID = buku.BukuID
-");
+$user = select("SELECT * FROM user");
 $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
 ?>
 <!DOCTYPE html>
@@ -41,7 +38,7 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
                 </div>
                 <div class="flex items-center absolute right-4">
                     <span class="hidden sm:block mr-4 text-gray-600">Hi, <?php echo $admin_name; ?></span>
-                    <a href="destroy.php" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-semibold transition">Logout</a>
+                    <a href="../view/destroy.php" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-semibold transition">Logout</a>
                 </div>
             </div>
         </div>
@@ -52,27 +49,24 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
                 <thead class="bg-gray-200">
                     <tr>
                         <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Nama Lengkap</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Tanggal Peminjaman</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">buku</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">status</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Alamat</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
-    <?php foreach ($peminjaman as $u): ?>
-    <tr class="hover:bg-orange-100">
-        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["NamaLengkap"]; ?></td>
-        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["TanggalPeminjaman"]; ?></td>
-        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Judul"]; ?></td>
-        <td class="px-6 py-4 whitespace-nowrap">
-            <?php if($u["StatusPeminjaman"] === "dipinjam"): ?>
-                <span class="text-red-600 font-semibold">belum dikembalikan</span>
-            <?php else: ?>
-                <span class="text-green-600 font-semibold">dikembalikan</span>
-            <?php endif; ?>
-        </td>
-    </tr>
-    <?php endforeach; ?>
-</tbody>
+                    <?php foreach ($user as $u): ?>
+                    <tr class="hover:bg-orange-100">
+                        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["NamaLengkap"]; ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Email"]; ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Alamat"]; ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="edit.php?id=<?php echo $u["UserID"];?>" class="text-blue-500 hover:underline">Edit</a> |
+                            <a href="hapus.php?id=<?php echo $u["UserID"]; ?>" class="text-red-500 hover:underline" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Hapus</a>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
             </table>
         </div>
     </div>

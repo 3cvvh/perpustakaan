@@ -1,6 +1,6 @@
 <?php 
 $id = $_GET["id"];
-include '../logic/function.php';
+include '../logic/fungsi_hapus.php';
 if(hapus($id) >0){
     echo "<script>
             alert('Data berhasil dihapus!');

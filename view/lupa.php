@@ -1,5 +1,6 @@
 <?php
 require '../logic/function.php';
+include '../logic/fungsi_lupa.php';
 if(isset($_POST["submit"])){
     if(lupa($_POST) == true){
         $email = $_POST["email"];

@@ -10,6 +10,7 @@ if(isset($_SESSION['role'])){
     }
 }
 include '../logic/function.php';
+include '../logic/fungsi_select.php';
 if (!isset($_SESSION['lupa'])) $_SESSION['lupa'] = 0;
 if(isset($_POST['submit'])){
     $username = $_POST['username'];
@@ -23,7 +24,7 @@ if(isset($_POST['submit'])){
             $_SESSION['login'] = true;
             $_SESSION['UserID'] = $row['UserID'];
             if ($row['role'] === 'admin' || $row['role'] === 'petugas') {
-                header("Location: index.php");
+                header("Location: ../admin/index.php");
             } elseif ($row['role'] === 'peminjam') {
                 header("Location: katalog.php");
             }

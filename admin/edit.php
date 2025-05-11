@@ -1,6 +1,7 @@
 <?php
 session_start();
-include '../logic/function.php';
+include '../logic/fungsi_edit.php';
+include '../logic/fungsi_select.php';
 $id = $_GET["id"];
 $aduh_gantengnya = select("SELECT * FROM user WHERE UserID = $id")[0];
 if(isset($_POST["submit"])){

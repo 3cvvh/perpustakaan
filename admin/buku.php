@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../logic/function.php';
+include '../logic/fungsi_select.php';
 if(!isset($_SESSION['login'])){
     header("Location: login.php");
     exit;
@@ -38,7 +38,7 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
                 </div>
                 <div class="flex items-center absolute right-4">
                     <span class="hidden sm:block mr-4 text-gray-600">Hi, <?php echo $admin_name; ?></span>
-                    <a href="destroy.php" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-semibold transition">Logout</a>
+                    <a href="../view/destroy.php" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-semibold transition">Logout</a>
                 </div>
             </div>
         </div>

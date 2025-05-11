@@ -1,6 +1,8 @@
 <?php
 session_start();
 include '../logic/function.php';
+include '../logic/fungsi_kembalikan.php';
+include '../logic/fungsi_select.php';
 $userId = $_SESSION['UserID'];
 $peminjaman = select("SELECT p.*, b.Judul, b.Foto 
     FROM peminjaman p 

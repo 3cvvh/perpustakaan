@@ -1,6 +1,10 @@
 <?php
 session_start();
+include '../logic/fungsi_hapus_ulasan.php';
 include '../logic/function.php';
+include '../logic/fungsi_select.php';
+include '../logic/fungsi_tambah_ulasan.php';
+include '../logic/fungsi_edit_ulasan.php';
 if(!isset($_SESSION['login'])) {
     header("Location: login.php");
     exit;
@@ -29,7 +33,7 @@ if(isset($_POST['submit'])) {
 if (isset($_GET['success']) && $_GET['success'] == 3) {
     $alert = '<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-4 text-center">Ulasan berhasil diedit!</div>';
 }
-// ...existing code...
+
 if (isset($_GET['success']) && $_GET['success'] == 1) {
     $alert = '<div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-4 text-center">Komentar berhasil ditambahkan!</div>';
 }

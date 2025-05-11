@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../logic/function.php';
-
+include '../logic/fungsi_select.php';
 if (!isset($_SESSION['login'])) {
     header("Location: view/login.php");
     exit;

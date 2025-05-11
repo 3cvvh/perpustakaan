@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../logic/function.php';
+include '../logic/fungsi_peminjaman.php';
 if(!isset($_SESSION["login"])){
     header("Location: login.php");
     exit;
