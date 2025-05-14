@@ -20,58 +20,104 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
     <title>Dashboard Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 text-gray-800">
-    <nav class="bg-white shadow-md">
+<body class="bg-gradient-to-br from-orange-50 to-gray-100 min-h-screen text-gray-800">
+    <nav class="bg-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-center h-16 items-center relative">
-                <a href="#" class="flex items-center text-orange-500 font-bold text-xl">
-                    <svg class="h-8 w-8 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <a href="#" class="flex items-center text-orange-600 font-extrabold text-2xl tracking-wide drop-shadow-lg">
+                    <svg class="h-9 w-9 mr-2 text-orange-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"></path>
                         <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"></circle>
                     </svg>
                     Perpustakaan
                 </a>
                 <div class="hidden sm:-my-px sm:flex space-x-8 absolute left-4">
-                    <a href="index.php" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">user</a>
-                    <a href="peminjaman_admin.php" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">peminjaman</a>
-                    <a href="buku.php" class="text-gray-700 hover:text-orange-500 px-3 py-2 rounded-md text-sm font-medium">buku</a>
+                    <a href="index.php" class="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-base font-semibold transition-all duration-200 hover:bg-orange-100">User</a>
+                    <a href="peminjaman_admin.php" class="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-base font-semibold transition-all duration-200 hover:bg-orange-100">Peminjaman</a>
+                    <a href="buku.php" class="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-base font-semibold transition-all duration-200 hover:bg-orange-100">Buku</a>
                 </div>
                 <div class="flex items-center absolute right-4">
-                    <span class="hidden sm:block mr-4 text-gray-600">Hi, <?php echo $admin_name; ?></span>
-                    <a href="../view/destroy.php" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-semibold transition">Logout</a>
+                    <span class="hidden sm:block mr-4 text-gray-700 font-medium">Hi, <?php echo $admin_name; ?></span>
+                    <a href="../view/destroy.php" class="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-5 py-2 rounded-lg text-base font-bold shadow transition-all duration-200">Logout</a>
                 </div>
             </div>
         </div>
     </nav>
-    <div class="container mx-auto p-6">
-    <div class="container mx-auto p-6">
-        <div class="mb-4">
-            <a href="tambah_buku.php" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-md text-sm font-semibold transition">
+    <header class="max-w-7xl mx-auto px-4 py-8">
+        <h1 class="text-3xl font-extrabold text-orange-600 mb-2 drop-shadow">Data Buku</h1>
+        <p class="text-gray-600 text-lg">Kelola koleksi buku perpustakaan dengan mudah dan cepat.</p>
+    </header>
+    <section class="max-w-7xl mx-auto px-4 mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition-transform duration-200">
+            <div class="bg-orange-100 rounded-full p-3 mb-2">
+                <svg class="h-8 w-8 text-orange-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8 17l4 4 4-4m-4-5v9"></path>
+                </svg>
+            </div>
+            <div class="text-2xl font-bold text-gray-800">
+                <?php echo count($user); ?>
+            </div>
+            <div class="text-gray-500">Total Buku</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition-transform duration-200">
+            <div class="bg-orange-100 rounded-full p-3 mb-2">
+                <svg class="h-8 w-8 text-orange-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m9-7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+            </div>
+            <div class="text-2xl font-bold text-gray-800">
+                <span id="userCount">-</span>
+            </div>
+            <div class="text-gray-500">Total User</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition-transform duration-200">
+            <div class="bg-orange-100 rounded-full p-3 mb-2">
+                <svg class="h-8 w-8 text-orange-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-6a2 2 0 012-2h2a2 2 0 012 2v6m-6 4h6"></path>
+                </svg>
+            </div>
+            <div class="text-2xl font-bold text-gray-800">
+                <span id="peminjamanCount">-</span>
+            </div>
+            <div class="text-gray-500">Total Peminjaman</div>
+        </div>
+    </section>
+    <div class="max-w-7xl mx-auto px-4 pb-10">
+        <div class="mb-6 flex justify-between items-center">
+            <a href="tambah_buku.php" class="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 py-2 rounded-lg text-base font-bold shadow transition-all duration-200">
                 + Tambah Buku
             </a>
         </div>
-        <div class="overflow-x-auto">
-        <div class="overflow-x-auto">
-            <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-                <thead class="bg-gray-200">
+        <div class="overflow-x-auto rounded-xl shadow-lg bg-white">
+            <table class="min-w-full bg-white rounded-xl overflow-hidden">
+                <thead class="bg-gradient-to-r from-orange-100 to-orange-200">
                     <tr>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Judul</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Penulis</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Penerbit</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">tahun terbit</th>
-                        <th class="px-6 py-3 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Aksi</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">No</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Judul</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Penulis</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Penerbit</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Tahun Terbit</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <?php foreach ($user as $u): ?>
-                    <tr class="hover:bg-orange-100">
-                        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Judul"]; ?></td>
+                <tbody class="divide-y divide-orange-100">
+                    <?php
+                    $no = 1;
+                    foreach ($user as $u): ?>
+                    <tr class="hover:bg-orange-50 transition-all duration-150">
+                        <td class="px-6 py-4 whitespace-nowrap font-semibold"><?php echo $no++; ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap font-semibold"><?php echo $u["Judul"]; ?></td>
                         <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Penulis"]; ?></td>
                         <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Penerbit"]; ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["TahunTerbit"]; ?></td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <a href="edit_buku.php?id=<?php echo $u["BukuID"]; ?>" class="text-blue-500 hover:underline">Edit</a> |
-                            <a href="hapus_buku.php?id=<?= $u["BukuID"]; ?>" class="text-red-500 hover:underline" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Hapus</a>
+                            <span class="inline-block px-3 py-1 rounded-full bg-orange-100 text-orange-700 font-bold text-xs">
+                                <?php echo $u["TahunTerbit"]; ?>
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <a href="edit_buku.php?id=<?php echo $u["BukuID"]; ?>" class="text-blue-600 hover:text-blue-800 font-semibold transition">Edit</a>
+                            <span class="mx-1 text-gray-400">|</span>
+                            <a href="hapus_buku.php?id=<?= $u["BukuID"]; ?>" class="text-red-500 hover:text-red-700 font-semibold transition" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Hapus</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>

@@ -27,51 +27,71 @@ if(isset($_POST["submit"])){
     <title>Katalog Buku</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-white min-h-screen flex flex-col">
-    <div class="w-full bg-white shadow">
-        <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-2">
-            <div class="flex items-center gap-2">
-                <img src="img/Logo.png" alt="Logo" class="h-16 w-16" />
-                <span class="font-bold text-lg text-blue-900">PERPUSTAKAAN DIGITAL</span>
+<body class="bg-gradient-to-br from-blue-50 to-white min-h-screen flex flex-col">
+    <div class="w-full bg-white shadow sticky top-0 z-20">
+        <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+            <div class="flex items-center gap-4">
+                <div class="flex items-center justify-center bg-blue-100 rounded-full w-14 h-14 border border-blue-200 shadow-sm">
+                    <img src="img/Logo.png" alt="Logo" class="h-10 w-10 object-contain" />
+                </div>
+                <span class="font-bold text-2xl text-blue-900 tracking-wide drop-shadow">PERPUSTAKAAN DIGITAL</span>
             </div>
             <div class="flex gap-8">
-                <a href="katalog.php" class="text-blue-900 font-medium border-b-2 border-blue-700 pb-1">katalog</a>
-                <a href="koleksi.php" class="text-blue-900 font-medium hover:border-b-2 hover:border-blue-700 pb-1">favorit</a>
-                <a href="peminjaman_user.php" class="text-blue-900 font-medium hover:border-b-2 hover:border-blue-700 pb-1">peminjaman</a>
+                <a href="katalog.php" class="text-blue-900 font-semibold border-b-2 border-blue-700 pb-1 transition">Katalog</a>
+                <a href="koleksi.php" class="text-blue-900 font-medium hover:border-b-2 hover:border-blue-700 pb-1 transition">Favorit</a>
+                <a href="peminjaman_user.php" class="text-blue-900 font-medium hover:border-b-2 hover:border-blue-700 pb-1 transition">Peminjaman</a>
             </div>
             <div class="flex items-center gap-4">
-                <span class="text-gray-700">hi <?php echo $peminjam_name; ?></span>
-                <img src="https://ui-avatars.com/api/?name=<?php echo $peminjam_name; ?>" class="rounded-full w-8 h-8 border" alt="avatar" />
-                <button class="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700"><a href="destroy.php">logout</a></button>
+                <span class="text-gray-700 font-medium">Hi, <?php echo $peminjam_name; ?></span>
+                <img src="https://ui-avatars.com/api/?name=<?php echo $peminjam_name; ?>" class="rounded-full w-9 h-9 border" alt="avatar" />
+                <a href="destroy.php" class="bg-red-600 text-white px-4 py-1 rounded hover:bg-red-700 font-medium transition shadow">Logout</a>
             </div>
         </div>
     </div>
-    <div class="w-full bg-gradient-to-r from-blue-200 to-pink-200 py-12 px-8 flex flex-col items-center relative">
-        <h2 class="text-4xl font-light text-white mb-2">Satu halaman saja</h2>
-        <p class="text-white text-lg mb-6">akan membuatmu lebih pintar setiap hari nya</p>
-        <form class="w-full max-w-xl flex items-center gap-2" method="post" action="">
-            <input type="text" placeholder="Cari buku yang anda sukai..." class="flex-1 px-4 py-2 rounded border border-gray-300 focus:outline-none" name="keyword" autocomplete="off" autofocus />
-            <button class="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800" type="submit" name="submit">Search</button>
-        </form>
-    </div>
-    <div class="px-8 mt-8">
-        <div class="text-lg font-semibold mb-4 text-blue-900"></div>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-        <?php foreach($buku as $b): ?>
-<div class="flex flex-col justify-between items-center bg-white shadow rounded p-4 h-full min-h-[320px]">
-    <div class="flex flex-col items-center w-full">
-        <img src="img/<?= htmlspecialchars($b['Foto']); ?>" alt="<?= htmlspecialchars($b['Judul']); ?>" class="w-28 h-40 object-cover rounded mb-2" />
-        <div class="font-medium text-center mb-1"><?= htmlspecialchars($b['Judul']); ?></div>
-        <div class="text-xs text-gray-500 mb-2"><?= htmlspecialchars($b['NamaKategori']); ?></div>
-    </div>
-    <a href="pinjam.php?id_buku=<?php echo $b["BukuID"] ?>" class="bg-blue-700 text-white px-4 py-1 rounded hover:bg-blue-800 w-full mt-4 text-center block">pinjam</a>
-</div>
-<?php endforeach; ?>
-</div>
+    <div class="w-full bg-gradient-to-r from-blue-400 via-blue-200 to-pink-200 py-14 px-8 flex flex-col items-center relative">
+        <div class="backdrop-blur-md bg-white/30 rounded-2xl shadow-lg px-8 py-10 flex flex-col items-center max-w-2xl w-full border border-blue-100">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-blue-900 mb-2 drop-shadow">Satu Halaman Saja</h2>
+            <p class="text-blue-800 text-lg md:text-xl mb-6 font-light drop-shadow">Akan membuatmu lebih pintar setiap hari nya</p>
+            <form class="w-full max-w-xl flex items-center gap-2" method="post" action="">
+                <input type="text" placeholder="Cari buku yang anda sukai..." class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-200 shadow" name="keyword" autocomplete="off" autofocus />
+                <button class="bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-800 transition shadow" type="submit" name="submit">
+                    <svg class="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    Search
+                </button>
+            </form>
         </div>
     </div>
-    <div class="mt-auto w-full bg-blue-900 text-white text-center py-4">
-        &copy; 2025 perpustakaan digital | Powered by perpustakaan digital
+    <div class="px-8 mt-8">
+        <div class="text-2xl font-bold mb-8 text-blue-900 text-center tracking-wide">Katalog Buku</div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8">
+        <?php foreach($buku as $b): ?>
+            <div class="flex flex-col bg-white shadow-2xl rounded-2xl p-4 h-[320px] border border-blue-200 transition-transform hover:-translate-y-2 hover:shadow-blue-300 group relative overflow-hidden">
+                <div class="flex flex-col items-center w-full flex-1">
+                    <div class="relative mb-2">
+                        <img src="img/<?= htmlspecialchars($b['Foto']); ?>" alt="<?= htmlspecialchars($b['Judul']); ?>" class="w-24 h-32 object-cover rounded-lg border-2 border-blue-100 shadow-lg transition-transform duration-300 group-hover:scale-105 bg-gray-100" />
+                        <span class="absolute top-2 left-2 bg-blue-600 text-white text-[11px] px-2 py-0.5 rounded shadow opacity-90 font-semibold"><?= htmlspecialchars($b['NamaKategori']); ?></span>
+                    </div>
+                    <div class="font-bold text-center mb-1 text-blue-900 text-sm truncate w-full" title="<?= htmlspecialchars($b['Judul']); ?>">
+                        <?= htmlspecialchars($b['Judul']); ?>
+                    </div>
+                </div>
+                <div class="flex flex-col w-full mt-auto">
+                    <a href="pinjam.php?id_buku=<?= $b["BukuID"] ?>" class="bg-gradient-to-r from-blue-700 to-blue-400 text-white px-3 py-1.5 rounded-lg hover:from-blue-800 hover:to-blue-500 text-center font-semibold transition shadow flex items-center justify-center gap-1 text-xs mb-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+                        Pinjam Buku
+                    </a>
+                    <a href="tambah_koleksi.php?id=<?= $b["BukuID"] ?>" class="bg-gradient-to-r from-pink-200 to-pink-100 text-pink-700 px-3 py-1.5 rounded-lg hover:from-pink-300 hover:to-pink-200 text-center font-semibold transition shadow border border-pink-200 flex items-center justify-center gap-1 text-xs">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+                        Tambahkan ke Koleksi
+                    </a>
+                </div>
+                <div class="absolute inset-0 rounded-2xl border-2 border-blue-400 opacity-0 group-hover:opacity-100 pointer-events-none transition"></div>
+            </div>
+        <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="mt-auto w-full bg-blue-900 text-white text-center py-6 rounded-t-2xl shadow-inner mt-16">
+        &copy; 2025 <span class="font-bold">Perpustakaan Digital</span> | Powered by Perpustakaan Digital
     </div>
 </body>
 </html>

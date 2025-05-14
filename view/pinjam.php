@@ -10,7 +10,6 @@ if(!isset($_SESSION['login'])) {
     exit;
 }
 $alert = '';
-// ...existing code...
 if(isset($_POST['submit'])) {
     if (!empty($_POST['ulasan_id'])) {
         // Edit ulasan
@@ -74,7 +73,7 @@ if(isset($_POST['delete_ulasan'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 min-h-screen">
+<body class="bg-gradient-to-br from-blue-50 to-white min-h-screen">
     <div class="w-full bg-white shadow">
         <div class="max-w-7xl mx-auto flex items-center justify-between px-4 py-2">
             <div class="flex items-center gap-2">
@@ -92,97 +91,98 @@ if(isset($_POST['delete_ulasan'])) {
             </div>
         </div>
     </div>
-    <div class="max-w-7xl mx-auto mt-8 flex flex-col md:flex-row gap-8">
-        <div class="bg-white rounded shadow p-6 w-full md:w-80 flex flex-col items-center">
-            <img src="img/<?= htmlspecialchars($data_buku['Foto']) ?>" alt="<?= htmlspecialchars($data_buku['Judul']) ?>" class="w-40 h-60 object-cover rounded mb-4 border" />
-            <a href="pinjam_buku.php?id=<?php echo $id_buku?>" class="w-full bg-blue-700 text-white py-2 rounded mb-2 text-center hover:bg-blue-800 transition">pinjam</a>
-            <a href="tambah_koleksi.php?id=<?php echo $id_buku ?>" class="w-full border border-blue-700 text-blue-700 py-2 rounded mb-4 text-center hover:bg-blue-50 transition">tambah ke koleksi</a>
+    <div class="max-w-7xl mx-auto mt-10 flex flex-col md:flex-row gap-10">
+        <div class="bg-white rounded-xl shadow-lg p-8 w-full md:w-96 flex flex-col items-center border border-blue-100">
+            <img src="img/<?= htmlspecialchars($data_buku['Foto']) ?>" alt="<?= htmlspecialchars($data_buku['Judul']) ?>" class="w-44 h-64 object-cover rounded-lg mb-6 border shadow" />
+            <a href="pinjam_buku.php?id=<?php echo $id_buku?>" class="w-full bg-blue-700 text-white py-2 rounded-lg mb-3 text-center font-semibold hover:bg-blue-800 transition">Pinjam Buku</a>
+            <a href="tambah_koleksi.php?id=<?php echo $id_buku ?>" class="w-full flex items-center justify-center gap-2 border border-blue-700 text-blue-700 py-2 rounded-lg text-center font-semibold hover:bg-blue-50 transition shadow-sm">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4"/></svg>
+                Tambah ke Koleksi Favorit
+            </a>
         </div>
-        <div class="flex-1 bg-white rounded shadow p-8">
+        <div class="flex-1 bg-white rounded-xl shadow-lg p-10 border border-blue-100">
             <?php if(!empty($alert)) echo $alert; ?>
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                 <div>
-                    <h2 class="text-2xl font-semibold text-blue-900 mb-1"><?= htmlspecialchars($data_buku['Judul']) ?></h2>
-                    <div class="text-gray-600 mb-2"><?= htmlspecialchars($data_buku['Deskripsi']) ?></div>
-                    <div class="text-sm text-gray-500 mb-2">by <?= htmlspecialchars($data_buku['Penulis']) ?></div>
-                    <div class="flex items-center gap-2 mb-2">
-                    </div>
+                    <h2 class="text-3xl font-bold text-blue-900 mb-2"><?= htmlspecialchars($data_buku['Judul']) ?></h2>
+                    <div class="text-gray-700 mb-3"><?= htmlspecialchars($data_buku['Deskripsi']) ?></div>
+                    <div class="text-base text-gray-500 mb-2">Penulis: <span class="font-semibold"><?= htmlspecialchars($data_buku['Penulis']) ?></span></div>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 my-4">
-                <div class="border rounded p-2 text-center">
-                    <div class="text-xs text-gray-500">penerbit</div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 my-6">
+                <div class="border rounded-lg p-3 text-center bg-blue-50">
+                    <div class="text-xs text-gray-500">Penerbit</div>
                     <div class="font-semibold"><?= htmlspecialchars($data_buku['Penerbit']) ?></div>
                 </div>
-                <div class="border rounded p-2 text-center">
-                    <div class="text-xs text-gray-500">tahun terbit</div>
+                <div class="border rounded-lg p-3 text-center bg-blue-50">
+                    <div class="text-xs text-gray-500">Tahun Terbit</div>
                     <div class="font-semibold"><?= htmlspecialchars($data_buku['TahunTerbit']) ?></div>
                 </div>
-                <div class="border rounded p-2 text-center">
-                    <div class="text-xs text-gray-500">halaman</div>
+                <div class="border rounded-lg p-3 text-center bg-blue-50">
+                    <div class="text-xs text-gray-500">Halaman</div>
                     <div class="font-semibold"><?= htmlspecialchars($data_buku['halaman']) ?></div>
                 </div>
-                <div class="border rounded p-2 text-center">
-                    <div class="text-xs text-gray-500">kategori</div>
+                <div class="border rounded-lg p-3 text-center bg-blue-50">
+                    <div class="text-xs text-gray-500">Kategori</div>
                     <div class="flex flex-wrap gap-1 justify-center">
                         <?php foreach($data_kate['NamaKategori'] as $kat): ?>
-                            <span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs"><?= ($kat) ?></span>
+                            <span class="bg-blue-200 text-blue-800 px-2 py-0.5 rounded text-xs"><?= ($kat) ?></span>
                         <?php endforeach; ?>
                     </div>
                 </div>
             </div>
-            <div class="mt-6">
-                <div class="font-semibold mb-2">comments:</div>
+            <div class="mt-8">
+                <div class="font-bold text-lg mb-4 text-blue-900">Ulasan & Komentar</div>
+                <div class="space-y-6">
                 <?php foreach($comments as $c): ?>
-                <div class="flex items-start gap-3 mb-4">
-                    <img src="https://ui-avatars.com/api/?name=<?= urlencode($c['NamaLengkap']) ?>" class="w-8 h-8 rounded-full border" alt="avatar" />
-                    <div>
-                        <div class="flex items-center gap-2">
-                            <span class="font-medium"><?= htmlspecialchars($c['NamaLengkap']) ?></span>
-                            <div class="flex">
-                                <?php foreach(range(1,5) as $i): ?>
-                                    <svg class="w-4 h-4 <?= $i <= $c['Rating'] ? 'text-yellow-400' : 'text-gray-300' ?>" fill="currentColor" viewBox="0 0 20 20"><polygon points="10,1 12.59,7.36 19.51,7.36 13.97,11.63 16.56,17.99 10,13.72 3.44,17.99 6.03,11.63 0.49,7.36 7.41,7.36"/></svg>
-                                <?php endforeach; ?>
+                    <div class="flex items-start gap-4 bg-blue-50 rounded-lg p-4 shadow-sm">
+                        <img src="https://ui-avatars.com/api/?name=<?= urlencode($c['NamaLengkap']) ?>" class="w-10 h-10 rounded-full border" alt="avatar" />
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="font-semibold text-blue-800"><?= htmlspecialchars($c['NamaLengkap']) ?></span>
+                                <div class="flex">
+                                    <?php foreach(range(1,5) as $i): ?>
+                                        <svg class="w-4 h-4 <?= $i <= $c['Rating'] ? 'text-yellow-400' : 'text-gray-300' ?>" fill="currentColor" viewBox="0 0 20 20"><polygon points="10,1 12.59,7.36 19.51,7.36 13.97,11.63 16.56,17.99 10,13.72 3.44,17.99 6.03,11.63 0.49,7.36 7.41,7.36"/></svg>
+                                    <?php endforeach; ?>
+                                </div>
+                                <?php if($c['NamaLengkap'] == $peminjam_name): ?>
+                                <form method="post" class="inline">
+                                    <input type="hidden" name="ulasan_id" value="<?= $c['UlasanID'] ?>">
+                                    <button name="submit_edit" type="button" onclick="editUlasan('<?= htmlspecialchars($c['Ulasan']) ?>', <?= $c['Rating'] ?>, <?= $c['UlasanID'] ?>)" class="text-blue-600 text-xs ml-2 hover:underline">Edit</button>
+                                </form>
+                                <form method="post" class="inline" onsubmit="return confirmDeleteUlasan(event, this);">
+                                    <input type="hidden" name="ulasan_id" value="<?= $c['UlasanID'] ?>">
+                                    <button type="submit" name="delete_ulasan" class="text-red-600 text-xs ml-1 hover:underline">Hapus</button>
+                                </form>
+                                <?php endif; ?>
                             </div>
-                            <?php if($c['NamaLengkap'] == $peminjam_name): ?>
-                            <!-- Tombol Edit dan Hapus untuk ulasan sendiri -->
-                            <form method="post" class="inline">
-                                <input type="hidden" name="ulasan_id" value="<?= $c['UlasanID'] ?>">
-                                <button name="submit_edit" type="button" onclick="editUlasan('<?= htmlspecialchars($c['Ulasan']) ?>', <?= $c['Rating'] ?>, <?= $c['UlasanID'] ?>)" class="text-blue-600 text-xs ml-2">Edit</button>
-                            </form>
-                            <form method="post" class="inline" onsubmit="return confirmDeleteUlasan(event, this);">
-                                <input type="hidden" name="ulasan_id" value="<?= $c['UlasanID'] ?>">
-                                <button type="submit" name="delete_ulasan" class="text-red-600 text-xs ml-1">Hapus</button>
-                            </form>
-                        <?php endif; ?>
+                            <div class="text-gray-700"><?= htmlspecialchars($c['Ulasan']) ?></div>
                         </div>
-                        <div class="text-sm"><?= htmlspecialchars($c['Ulasan']) ?></div>
                     </div>
-                </div>
                 <?php endforeach; ?>
-
-                <form class="border rounded p-4 mt-4 bg-gray-50" id="commentForm" method="post" action="">
-                    <textarea class="w-full border rounded p-2 mb-2 focus:outline-none" rows="2" placeholder="Tulis ulasan di sini..." name="komen" id="komenInput"></textarea>
-                    <div class="flex items-center gap-2 mb-2">
+                </div>
+                <form class="border rounded-xl p-6 mt-8 bg-blue-50 shadow" id="commentForm" method="post" action="">
+                    <textarea class="w-full border rounded p-2 mb-3 focus:outline-none focus:ring-2 focus:ring-blue-200" rows="3" placeholder="Tulis ulasan di sini..." name="komen" id="komenInput"></textarea>
+                    <div class="flex items-center gap-2 mb-3">
                         <span class="text-sm text-gray-500">Rating Anda:</span>
                         <div class="flex gap-1" id="starRating">
                             <?php for($i=1;$i<=5;$i++): ?>
-                                <svg data-star="<?= $i ?>" class="w-5 h-5 text-gray-300 hover:text-yellow-400 cursor-pointer star" fill="currentColor" viewBox="0 0 20 20"><polygon points="10,1 12.59,7.36 19.51,7.36 13.97,11.63 16.56,17.99 10,13.72 3.44,17.99 6.03,11.63 0.49,7.36 7.41,7.36"/></svg>
+                                <svg data-star="<?= $i ?>" class="w-6 h-6 text-gray-300 hover:text-yellow-400 cursor-pointer star transition" fill="currentColor" viewBox="0 0 20 20"><polygon points="10,1 12.59,7.36 19.51,7.36 13.97,11.63 16.56,17.99 10,13.72 3.44,17.99 6.03,11.63 0.49,7.36 7.41,7.36"/></svg>
                             <?php endfor; ?>
                         </div>
                         <input type="hidden" name="rating" id="ratingInput" value="0" />
                         <input type="hidden" name="ulasan_id" id="ulasanIdInput" value="" />
                     </div>
-                    <button type="submit" class="bg-blue-700 text-white px-4 py-1 rounded hover:bg-blue-800" name="submit">Kirim</button>
+                    <button type="submit" class="bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-800 transition" name="submit">Kirim Ulasan</button>
                 </form>
             </div>
         </div>
     </div>
-    <div class="mt-12 w-full bg-blue-900 text-white text-center py-4">
-        &copy; 2025 perpustakaan digital | Powered by perpustakaan digital
+    <div class="mt-16 w-full bg-blue-900 text-white text-center py-5 rounded-t-xl shadow-inner">
+        &copy; 2025 Perpustakaan Digital &mdash; Powered by Perpustakaan Digital
     </div>
     <script>
-    // Interaktif bintang rating
+    // bintang rating
     document.addEventListener('DOMContentLoaded', function() {
         const stars = document.querySelectorAll('#starRating .star');
         const ratingInput = document.getElementById('ratingInput');
