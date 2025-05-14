@@ -1,8 +1,7 @@
 <?php
 include '../logic/function.php';
-function kembalikan($data_post){
+function kembalikan($id){
     global $db;
-    $id = $data_post["id"];
     $tanggal_kembali = date('Y-m-d');
     $query_update = "UPDATE peminjaman SET StatusPeminjaman = 'selesai', TanggalPengembalian = '$tanggal_kembali' WHERE PeminjamanID = $id";
     mysqli_query($db, $query_update);

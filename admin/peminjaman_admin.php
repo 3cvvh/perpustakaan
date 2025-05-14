@@ -1,6 +1,16 @@
 <?php
 session_start();
 include '../logic/fungsi_select.php';
+if (isset($_POST['kembali'])) {
+    include '../logic/fungsi_kembalikan.php';
+    $id = $_POST["id"];
+    if (kembalikan($id) > 0) {
+        echo "<script>alert('Buku berhasil dikembalikan!');</script>";
+        echo "<script>location='peminjaman_admin.php';</script>";
+    } else {
+        echo "<script>alert('Gagal mengembalikan buku!');</script>";
+    }
+}
 if(!isset($_SESSION['login'])){
     header("Location: login.php");
     exit;
@@ -95,6 +105,7 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
                         <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Tanggal Peminjaman</th>
                         <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Buku</th>
                         <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-orange-100">
@@ -112,6 +123,17 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
                             <?php else: ?>
                                 <span class="inline-block px-3 py-1 rounded-full bg-green-100 text-green-700 font-bold text-xs">Dikembalikan</span>
                             <?php endif; ?>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <?php if($u["StatusPeminjaman"] == "dipinjam"): ?>
+                                <form action="" method="post" >
+                                    <input type="hidden" name="id" value="<?= $u['PeminjamanID'] ?>">
+                                    <button type="submit" name="kembali" class="bg-gradient-to-r from-red-500 to-red-600 text-white px-4 py-2 rounded-lg text-sm font-bold shadow transition-all duration-200 hover:from-red-600 hover:to-red-700">Kembalikan</button>
+                                </form>
+                            <?php else: ?>
+                                <span class="inline-block px-3 py-1 rounded-full bg-green-100 text-green-700 font-bold text-xs">Selesai</span>
+                            <?php endif; ?>
+
                         </td>
                     </tr>
                     <?php endforeach; ?>

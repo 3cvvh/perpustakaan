@@ -60,7 +60,6 @@ $peminjaman = select("SELECT p.*, b.Judul, b.Foto
                             <th class="px-4 py-2 text-left">Tanggal Pinjam</th>
                             <th class="px-4 py-2 text-left">Tanggal Kembali</th>
                             <th class="px-4 py-2 text-left">Status</th>
-                            <th class="px-4 py-2 text-left">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -77,16 +76,6 @@ $peminjaman = select("SELECT p.*, b.Judul, b.Foto
                                     <span class="inline-block bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-semibold">Dipinjam</span>
                                 <?php else: ?>
                                     <span class="inline-block bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-semibold">Selesai</span>
-                                <?php endif; ?>
-                            </td>
-                            <td class="border-t px-4 py-2">
-                                <?php if($p['StatusPeminjaman'] == 'dipinjam'): ?>
-                                    <form method="post" action="" class="inline">
-                                        <input type="hidden" name="id" value="<?= $p['PeminjamanID'] ?>">
-                                        <button name="submit" type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded shadow font-semibold transition">Kembalikan</button>
-                                    </form>
-                                <?php elseif($p['StatusPeminjaman'] == 'selesai'): ?>
-                                    <span class="text-green-600 font-semibold">Selesai</span>
                                 <?php endif; ?>
                             </td>
                         </tr>
