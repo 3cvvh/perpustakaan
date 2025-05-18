@@ -1,15 +1,21 @@
 <?php
+// Mulai session untuk autentikasi
 session_start();
+// Import fungsi select data dari database
 include '../logic/fungsi_select.php';
+// Cek apakah user sudah login, jika belum redirect ke login
 if(!isset($_SESSION['login'])){
     header("Location: login.php");
     exit;
 }
+// Cek role user, hanya admin/petugas yang boleh akses
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'petugas') {
     header("Location: katalog.php");
     exit;
 }
+// Ambil semua data buku dari database
 $user = select("SELECT * FROM buku");
+// Ambil nama admin dari session
 $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
 ?>
 <!DOCTYPE html>
@@ -18,6 +24,7 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Admin</title>
+    <!-- CDN Tailwind CSS untuk styling -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-orange-50 to-gray-100 min-h-screen text-gray-800">

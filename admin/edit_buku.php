@@ -1,12 +1,21 @@
 <?php
+// Ambil id buku dari parameter GET
 $id = $_GET["id"];
+// Import fungsi select data dari database
 include '../logic/fungsi_select.php';
+// Import fungsi edit buku
 include '../logic/fungsi_edit_buku.php';
+// Import fungsi upload file
 include '../logic/fungsi_uploud.php';
+// Ambil semua kategori buku dari database
 $kategori = select("SELECT * FROM kategoribuku");
+// Ambil relasi kategori buku saat ini
 $relasi = select("SELECT KategoriID FROM kategoribuku_relasi WHERE BukuID = $id");
+// Ambil KategoriID yang sedang dipakai buku
 $KategoriID_sekarang = $relasi ? $relasi[0]['KategoriID'] : '';
+// Ambil data buku yang akan diedit
 $aduh_gantengnya = select("SELECT * FROM buku where BukuID = $id")[0];
+// Jika form disubmit
 if(isset($_POST["submit"])){
     $result = edit_buku($_POST);
     if($result !== false){

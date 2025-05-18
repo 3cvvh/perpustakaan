@@ -1,9 +1,14 @@
 <?php
+// Mulai session untuk autentikasi
 session_start();
+// Import fungsi select data dari database
 include '../logic/fungsi_select.php';
+// Jika tombol kembalikan ditekan
 if (isset($_POST['kembali'])) {
+    // Import fungsi kembalikan buku
     include '../logic/fungsi_kembalikan.php';
     $id = $_POST["id"];
+    // Jika kembalikan berhasil
     if (kembalikan($id) > 0) {
         echo "<script>alert('Buku berhasil dikembalikan!');</script>";
         echo "<script>location='peminjaman_admin.php';</script>";
@@ -11,18 +16,22 @@ if (isset($_POST['kembali'])) {
         echo "<script>alert('Gagal mengembalikan buku!');</script>";
     }
 }
+// Cek apakah user sudah login, jika belum redirect ke login
 if(!isset($_SESSION['login'])){
     header("Location: login.php");
     exit;
 }
+// Cek role user, hanya admin/petugas yang boleh akses
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'petugas') {
     header("Location: katalog.php");
     exit;
 }
+// Ambil data peminjaman beserta relasi user dan buku
 $peminjaman = select("SELECT * FROM peminjaman 
     INNER JOIN user ON peminjaman.UserID = user.UserID 
     INNER JOIN buku ON peminjaman.BukuID = buku.BukuID
 ");
+// Ambil nama admin dari session
 $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
 ?>
 <!DOCTYPE html>

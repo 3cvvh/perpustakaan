@@ -1,8 +1,11 @@
 <?php
 session_start();
+// menghubungkan dengan logic
 include '../logic/fungsi_edit.php';
 include '../logic/fungsi_select.php';
+// menangkap id user dari parameter GET
 $id = $_GET["id"];
+// tapmilkan data user berdasarkan id
 $aduh_gantengnya = select("SELECT * FROM user WHERE UserID = $id")[0];
 if(isset($_POST["submit"])){
     if(edit($_POST) > 0){

@@ -1,15 +1,22 @@
 <?php
+// Mulai session untuk autentikasi
 session_start();
-include '../logic/fungsi_select.php';
-if(!isset($_SESSION['login'])){
+if(!isset($_SESSION['login'])) {
     header("Location: ../view/login.php");
     exit;
 }
+$userID = $_SESSION['UserID'];
+// Import fungsi select data dari database
+include '../logic/fungsi_select.php';
+// Cek apakah user sudah login, jika belum redirect ke login
+// Cek role user, hanya admin/petugas yang boleh akses
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'petugas') {
     header("Location: katalog.php");
     exit;
 }
+// Ambil semua data user dari database
 $user = select("SELECT * FROM user");
+// Ambil nama admin dari session
 $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
 ?>
 <!DOCTYPE html>
@@ -18,12 +25,14 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard <?php
+    // Judul halaman sesuai role
     if(isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
         echo "Admin";
     } elseif (isset($_SESSION['role']) && $_SESSION['role'] === 'petugas') {
         echo "Petugas";
     }
     ?></title>
+    <!-- CDN Tailwind CSS untuk styling -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-orange-50 to-gray-100 min-h-screen text-gray-800">
@@ -51,12 +60,13 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
     </nav>
     <header class="max-w-7xl mx-auto px-4 py-8">
         <h1 class="text-3xl font-extrabold text-orange-600 mb-2 drop-shadow"><?php 
-if (isset($_SESSION['role']) && $_SESSION["role"] == "admin") {
-    echo "Dashboard Admin";
-} elseif (isset($_SESSION['role']) && $_SESSION["role"] == "petugas") {
-    echo "Dashboard Petugas";
-} 
-?></h1>
+        // Judul halaman sesuai role
+        if (isset($_SESSION['role']) && $_SESSION["role"] == "admin") {
+            echo "Dashboard Admin";
+        } elseif (isset($_SESSION['role']) && $_SESSION["role"] == "petugas") {
+            echo "Dashboard Petugas";
+        } 
+        ?></h1>
         <p class="text-gray-600 text-lg">Selamat datang di halaman admin perpustakaan. Kelola data user, buku, dan peminjaman dengan mudah.</p>
     </header>
     <section class="max-w-7xl mx-auto px-4 mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -110,7 +120,14 @@ if (isset($_SESSION['role']) && $_SESSION["role"] == "admin") {
                 <tbody class="divide-y divide-orange-100">
                     <?php
                     $no = 1; 
-                    foreach ($user as $u): ?>
+                    foreach ($user as $u):
+                    if ($u["role"] === 'admin' && $_SESSION['role'] !== 'admin') {
+                        continue; // Skip admin
+                    }
+                    if ($u["UserID"] === $userID) {
+                        continue; // Skip yg sedang login user
+                    }
+                    ?>
                     <tr class="hover:bg-orange-50 transition-all duration-150">
                         <td class="px-6 py-4 whitespace-nowrap"><?php echo $no++; ?></td>
                         <td class="px-6 py-4 whitespace-nowrap font-semibold"><?php echo $u["NamaLengkap"]; ?></td>
