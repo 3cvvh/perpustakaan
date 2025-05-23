@@ -1,7 +1,7 @@
 # 📚 Proyek Perpustakaan - Kelompok 5
 
 <p align="center">
-  <img src="perpus.gif" alt="Demo Aplikasi" width="500"/><br>
+  <img src="perpus.gif" alt="Demo Aplikasi" width="220" style="border-radius: 50%; border: 2px solid #ccc;"/><br>
   <em>my waifu</em>
 </p>
 
