@@ -1,5 +1,7 @@
 # 📚 Proyek Perpustakaan - Kelompok 5
 
+![Demo Aplikasi](perpus.gif)
+
 ## Tentang Proyek
 Repositori ini berisi aplikasi **Perpustakaan** yang dikembangkan oleh Kelompok 5 sebagai bagian dari tugas Project Based Learning (PBL).  
 Aplikasi ini bertujuan untuk memudahkan pengelolaan data buku, anggota, dan peminjaman di perpustakaan.
