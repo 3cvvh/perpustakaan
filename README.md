@@ -11,11 +11,13 @@ Aplikasi ini bertujuan untuk memudahkan pengelolaan data buku, anggota, dan pemi
 - **Nafis**
 
 ## ✨ Fitur Utama
-- Manajemen data buku (tambah, edit, hapus, cari)
-- Manajemen anggota perpustakaan
-- Peminjaman & pengembalian buku
-- Riwayat transaksi
-- Pencarian data
+- crud buku
+- crud user
+- login
+- register
+- pengembalian
+- peminjaman
+- ulasan
 
 ## 🚀 Cara Instalasi & Menjalankan
 1. **Clone repositori ini:**
