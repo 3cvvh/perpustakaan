@@ -16,7 +16,6 @@ Aplikasi ini bertujuan untuk memudahkan pengelolaan data buku, anggota, dan pemi
 - Peminjaman & pengembalian buku
 - Riwayat transaksi
 - Pencarian data
-- Laporan sederhana
 
 ## 🚀 Cara Instalasi & Menjalankan
 1. **Clone repositori ini:**
@@ -32,16 +31,15 @@ Aplikasi ini bertujuan untuk memudahkan pengelolaan data buku, anggota, dan pemi
    - Aktifkan Apache & MySQL melalui XAMPP Control Panel.
 4. **Import database:**
    - Buka `phpMyAdmin`.
-   - Import file database yang tersedia (misal: `perpustakaan.sql`).
+   - Import file database yang tersedia (misal: `perpus_chan.sql`).
 
 5. **Akses aplikasi:**
-   - Buka browser dan akses: [http://localhost/tes/perpustakaan](http://localhost/tes/perpustakaan)
+   - Buka browser dan akses: [http://localhost/perpustakaan](http://localhost/perpustakaan)
 
 ## 📝 Penggunaan
 - Login sebagai admin/anggota.
 - Kelola data buku dan anggota.
 - Lakukan peminjaman dan pengembalian buku.
-- Lihat laporan transaksi.
 
 ## 📬 Kontak
 Jika ada pertanyaan atau saran, silakan hubungi anggota kelompok melalui email atau GitHub.
