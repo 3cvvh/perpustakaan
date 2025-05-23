@@ -28,7 +28,7 @@ if(isset($_POST['submit'])){
     $row = mysqli_fetch_assoc($result);
     if($row > 0){
         if(password_verify($password, $row['Password'])){
-            $_SESSION['name'] = $row['NamaLengkap'];
+            $_SESSION['name'] = $row['Username'];
             $_SESSION["role"] = $row["role"];
             $_SESSION['login'] = true;
             $_SESSION['UserID'] = $row['UserID'];

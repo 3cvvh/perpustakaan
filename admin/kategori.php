@@ -1,45 +1,61 @@
 <?php
 // Mulai session untuk autentikasi
 session_start();
-if(!isset($_SESSION['login'])) {
-    header("Location: ../view/login.php");
-    exit;
-}
-$userID = $_SESSION['UserID'];
 // Import fungsi select data dari database
 include '../logic/fungsi_select.php';
+include '../logic/fungsi_tambah_kategori.php';
 // Cek apakah user sudah login, jika belum redirect ke login
+if(!isset($_SESSION['login'])){
+    header("Location: login.php");
+    exit;
+}
+
 // Cek role user, hanya admin/petugas yang boleh akses
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'petugas') {
     header("Location: katalog.php");
     exit;
 }
-// Ambil semua data user dari database
-$user = select("SELECT * FROM user");
+// Ambil data peminjaman beserta relasi user dan buku
 $peminjaman = select("SELECT * FROM peminjaman 
     INNER JOIN user ON peminjaman.UserID = user.UserID 
     INNER JOIN buku ON peminjaman.BukuID = buku.BukuID
 ");
+$user = select("SELECT * FROM user");
 $buku = select("SELECT * FROM buku");
-// Tambahkan ambil data kategori
 $kategori = select("SELECT * FROM kategoribuku");
 // Ambil nama admin dari session
 $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
+if(isset($_POST["tambah_kategori"])){
+if(tambah_kategori($_POST) > 0){
+    echo "<script>
+            alert('Data berhasil ditambahkan!');
+          </script>";
+} elseif(tambah_kategori($_POST) < 0) {
+    echo "<script>
+            alert('Data gagal ditambahkan!');
+          </script>";
+}
+}
+// Jika tombol hapus kategori ditekan
+if (isset($_POST['hapus_kategori'])) {
+    // Import fungsi hapus kategori
+    include '../logic/fungsi_hapus_kategori.php';
+    $id = $_POST["kategori_id"];
+    // Jika hapus kategori berhasil
+    if (hapus_kategori($id) > 0) {
+        echo "<script>alert('Kategori berhasil dihapus!');</script>";
+        echo "<script>location='kategori.php';</script>";
+    } else {
+        echo "<script>alert('Gagal menghapus kategori!');</script>";
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard <?php
-    // Judul halaman sesuai role
-    if(isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
-        echo "Admin";
-    } elseif (isset($_SESSION['role']) && $_SESSION['role'] === 'petugas') {
-        echo "Petugas";
-    }
-    ?></title>
-    <!-- CDN Tailwind CSS untuk styling -->
+    <title>Dashboard Kategori</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-orange-50 to-gray-100 min-h-screen text-gray-800">
@@ -67,16 +83,10 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
         </div>
     </nav>
     <header class="max-w-7xl mx-auto px-4 py-8">
-        <h1 class="text-3xl font-extrabold text-orange-600 mb-2 drop-shadow"><?php 
-        // Judul halaman sesuai role
-        if (isset($_SESSION['role']) && $_SESSION["role"] == "admin") {
-            echo "Dashboard Admin";
-        } elseif (isset($_SESSION['role']) && $_SESSION["role"] == "petugas") {
-            echo "Dashboard Petugas";
-        } 
-        ?></h1>
-        <p class="text-gray-600 text-lg">Selamat datang di halaman admin perpustakaan. Kelola data user, buku, dan peminjaman dengan mudah.</p>
+        <h1 class="text-3xl font-extrabold text-orange-600 mb-2 drop-shadow">Data Kategori</h1>
+        <p class="text-gray-600 text-lg">Kelola kategori buku perpustakaan di sini.</p>
     </header>
+    <!-- Tambahkan kartu total kategori -->
     <section class="max-w-7xl mx-auto px-4 mb-8 grid grid-cols-1 md:grid-cols-4 gap-6">
         <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition-transform duration-200">
             <div class="bg-orange-100 rounded-full p-3 mb-2">
@@ -125,44 +135,38 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
         </div>
     </section>
     <div class="max-w-7xl mx-auto px-4 pb-10">
-        <div class="overflow-x-auto rounded-xl shadow-lg bg-white">
+        <div class="mb-6 flex flex-col sm:flex-row gap-3 items-start sm:items-center">
+            <form method="post" class="flex flex-col sm:flex-row gap-3 items-start sm:items-center w-full">
+                <input type="text" name="nama_kategori" class="border border-orange-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-200 w-full sm:w-auto" placeholder="Nama kategori baru..." required>
+                <button type="submit" name="tambah_kategori" class="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 py-2 rounded-lg font-bold shadow transition-all duration-200 w-full sm:w-auto">
+                    + Tambah Kategori
+                </button>
+            </form>
+        </div>
+        <div class="overflow-x-auto rounded-xl shadow-lg bg-white p-6">
             <table class="min-w-full bg-white rounded-xl overflow-hidden">
                 <thead class="bg-gradient-to-r from-orange-100 to-orange-200">
                     <tr>
                         <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">No</th>
-                        <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Nama Lengkap</th>
-                        <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Email</th>
-                        <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Alamat</th>
-                        <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Role</th>
+                        <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Kategori</th>
                         <th class="px-6 py-3 text-left text-sm font-bold text-orange-700 uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-orange-100">
                     <?php
                     $no = 1; 
-                    foreach ($user as $u):
-                    if ($u["role"] === 'admin' && $_SESSION['role'] !== 'admin') {
-                        continue; // Skip admin
-                    }
-                    if ($u["UserID"] === $userID) {
-                        continue; // Skip yg sedang login user
-                    }
+                    foreach ($kategori as $k):
                     ?>
                     <tr class="hover:bg-orange-50 transition-all duration-150">
                         <td class="px-6 py-4 whitespace-nowrap"><?php echo $no++; ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap font-semibold"><?php echo $u["NamaLengkap"]; ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Email"]; ?></td>
-                        <td class="px-6 py-4 whitespace-nowrap"><?php echo $u["Alamat"]; ?></td>
+                        <td class="px-6 py-4 whitespace-nowrap font-semibold"><?php echo $k["NamaKategori"]; ?></td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="inline-block px-3 py-1 rounded-full text-xs font-bold 
-                                <?php echo $u["role"] === 'admin' ? 'bg-orange-500 text-white' : ($u["role"] === 'petugas' ? 'bg-orange-200 text-orange-700' : 'bg-gray-200 text-gray-700'); ?>">
-                                <?php echo ucfirst($u["role"]); ?>
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <a href="edit.php?id=<?php echo $u["UserID"];?>" class="text-blue-600 hover:text-blue-800 font-semibold transition">Edit</a>
-                            <span class="mx-1 text-gray-400">|</span>
-                            <a href="hapus.php?id=<?php echo $u["UserID"]; ?>" class="text-red-500 hover:text-red-700 font-semibold transition" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?');">Hapus</a>
+                            <form method="post" class="inline" onsubmit="return confirm('Hapus kategori ini?');">
+                                <input type="hidden" name="kategori_id" value="<?php echo $k['KategoriID']; ?>">
+                                <button type="submit" name="hapus_kategori" class="bg-red-500 hover:bg-red-700 text-white px-4 py-1 rounded font-semibold transition">
+                                    Hapus
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     <?php endforeach; ?>

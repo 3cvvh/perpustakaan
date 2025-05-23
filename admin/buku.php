@@ -14,8 +14,14 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin' && $_SESSION['rol
     exit;
 }
 // Ambil semua data buku dari database
-$user = select("SELECT * FROM buku");
-// Ambil nama admin dari session
+$user = select("SELECT * FROM user");
+$buku = select("SELECT * FROM buku");
+$peminjaman = select("SELECT * FROM peminjaman 
+    INNER JOIN user ON peminjaman.UserID = user.UserID 
+    INNER JOIN buku ON peminjaman.BukuID = buku.BukuID
+");
+// Tambahkan ambil data kategori
+$kategori = select("SELECT * FROM kategoribuku");
 $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
 ?>
 <!DOCTYPE html>
@@ -31,7 +37,7 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
     <nav class="bg-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-center h-16 items-center relative">
-                <a href="#" class="flex items-center text-orange-600 font-extrabold text-2xl tracking-wide drop-shadow-lg">
+                <a href="../view/katalog.php" class="flex items-center text-orange-600 font-extrabold text-2xl tracking-wide drop-shadow-lg">
                     <svg class="h-9 w-9 mr-2 text-orange-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2"></path>
                         <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"></circle>
@@ -42,6 +48,7 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
                     <a href="index.php" class="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-base font-semibold transition-all duration-200 hover:bg-orange-100">User</a>
                     <a href="peminjaman_admin.php" class="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-base font-semibold transition-all duration-200 hover:bg-orange-100">Peminjaman</a>
                     <a href="buku.php" class="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-base font-semibold transition-all duration-200 hover:bg-orange-100">Buku</a>
+                    <a href="kategori.php" class="text-gray-700 hover:text-orange-600 px-3 py-2 rounded-md text-base font-semibold transition-all duration-200 hover:bg-orange-100">Kategori</a>
                 </div>
                 <div class="flex items-center absolute right-4">
                     <span class="hidden sm:block mr-4 text-gray-700 font-medium">Hi, <?php echo $admin_name; ?></span>
@@ -54,7 +61,7 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
         <h1 class="text-3xl font-extrabold text-orange-600 mb-2 drop-shadow">Data Buku</h1>
         <p class="text-gray-600 text-lg">Kelola koleksi buku perpustakaan dengan mudah dan cepat.</p>
     </header>
-    <section class="max-w-7xl mx-auto px-4 mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <section class="max-w-7xl mx-auto px-4 mb-8 grid grid-cols-1 md:grid-cols-4 gap-6">
         <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition-transform duration-200">
             <div class="bg-orange-100 rounded-full p-3 mb-2">
                 <svg class="h-8 w-8 text-orange-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -62,20 +69,9 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
                 </svg>
             </div>
             <div class="text-2xl font-bold text-gray-800">
-                <?php echo count($user); ?>
+                <span id="bukuCount"><?php echo count($buku) ?></span>
             </div>
             <div class="text-gray-500">Total Buku</div>
-        </div>
-        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition-transform duration-200">
-            <div class="bg-orange-100 rounded-full p-3 mb-2">
-                <svg class="h-8 w-8 text-orange-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m9-7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                </svg>
-            </div>
-            <div class="text-2xl font-bold text-gray-800">
-                <span id="userCount">-</span>
-            </div>
-            <div class="text-gray-500">Total User</div>
         </div>
         <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition-transform duration-200">
             <div class="bg-orange-100 rounded-full p-3 mb-2">
@@ -84,9 +80,32 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
                 </svg>
             </div>
             <div class="text-2xl font-bold text-gray-800">
-                <span id="peminjamanCount">-</span>
+                <?php echo count($peminjaman); ?>
             </div>
             <div class="text-gray-500">Total Peminjaman</div>
+        </div>
+        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition-transform duration-200">
+            <div class="bg-orange-100 rounded-full p-3 mb-2">
+                <svg class="h-8 w-8 text-orange-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m9-7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                </svg>
+            </div>
+            <div class="text-2xl font-bold text-gray-800">
+                <span id="userCount"><?php echo count($user) ?></span>
+            </div>
+            <div class="text-gray-500">Total User</div>
+        </div>
+        <!-- Tambahkan kartu total kategori -->
+        <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center hover:scale-105 transition-transform duration-200">
+            <div class="bg-orange-100 rounded-full p-3 mb-2">
+                <svg class="h-8 w-8 text-orange-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                </svg>
+            </div>
+            <div class="text-2xl font-bold text-gray-800">
+                <span id="kategoriCount"><?php echo count($kategori) ?></span>
+            </div>
+            <div class="text-gray-500">Total Kategori</div>
         </div>
     </section>
     <div class="max-w-7xl mx-auto px-4 pb-10">
@@ -110,7 +129,7 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
                 <tbody class="divide-y divide-orange-100">
                     <?php
                     $no = 1;
-                    foreach ($user as $u): ?>
+                    foreach ($buku as $u): ?>
                     <tr class="hover:bg-orange-50 transition-all duration-150">
                         <td class="px-6 py-4 whitespace-nowrap font-semibold"><?php echo $no++; ?></td>
                         <td class="px-6 py-4 whitespace-nowrap font-semibold"><?php echo $u["Judul"]; ?></td>
