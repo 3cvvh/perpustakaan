@@ -226,7 +226,7 @@ if(isset($_POST['delete_ulasan'])) {
                     </div>
                     <h2 class="text-4xl font-extrabold text-blue-900 mb-1 drop-shadow animate-fade-in-down"><?= htmlspecialchars($data_buku['Judul']) ?></h2>
                     <div class="text-base text-blue-700 mb-3 font-semibold flex items-center gap-2">
-                        <svg class="w-5 h-5 text-blue-400 animate-bounce" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/><path d="M12 14c-4.418 0-8 1.79-8 4v2h16v-2c0-2.21-3.582-4-8-4z"/></svg>
+                        <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0z"/><path d="M12 14c-4.418 0-8 1.79-8 4v2h16v-2c0-2.21-3.582-4-8-4z"/></svg>
                         <?= htmlspecialchars($data_buku['Penulis']) ?>
                     </div>
                     <div class="text-gray-700 mb-3 transition-opacity duration-700 hover:opacity-80"><?= htmlspecialchars($data_buku['Deskripsi']) ?></div>
@@ -321,7 +321,7 @@ if(isset($_POST['delete_ulasan'])) {
         </button>
         <img id="modalImgCover" src="img/<?= htmlspecialchars($data_buku['Foto']) ?>" alt="<?= htmlspecialchars($data_buku['Judul']) ?>" class="modal-img" />
     </div>
-    <footer class="w-full bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-0 border-t-4 border-blue-500 mt-16 shadow-inner animate-fade-in-down relative overflow-hidden">
+     <footer class="w-full bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white py-0 border-t-4 border-blue-500 mt-16 shadow-inner animate-fade-in-down relative overflow-hidden">
         <!-- Glassmorphism effect -->
         <div class="absolute inset-0 bg-gradient-to-tr from-blue-800/70 via-blue-700/60 to-blue-900/80 backdrop-blur-md"></div>
         <div class="relative max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 px-6 py-10 z-10">
@@ -335,22 +335,36 @@ if(isset($_POST['delete_ulasan'])) {
             <!-- Center: Navigation & Social -->
             <div class="flex flex-col md:items-center gap-4">
                 <div class="flex gap-6 mb-2 md:mb-0">
-                    <a href="https://sekolah-anda.sch.id/about" target="_blank" class="relative font-semibold text-base px-4 py-1 rounded-full bg-white/10 hover:bg-blue-600/40 transition shadow hover:shadow-lg border border-blue-300/30 hover:border-blue-200 underline underline-offset-4 decoration-blue-200">About</a>
-                    <a href="https://sekolah-anda.sch.id" target="_blank" aria-label="Website" class="relative font-semibold text-base px-4 py-1 rounded-full bg-white/10 hover:bg-blue-600/40 transition shadow hover:shadow-lg border border-blue-300/30 hover:border-blue-200">Website</a>
+                    <a href="about.php" target="_blank"
+                        class="relative font-semibold text-base px-5 py-2 rounded-xl bg-white/20 hover:bg-blue-700 hover:text-white transition-all duration-300 shadow-lg border border-blue-300/30 hover:border-blue-200 underline underline-offset-4 decoration-blue-200 scale-100 hover:scale-105 active:scale-95">
+                        <span class="inline-block transition-transform duration-300 group-hover:translate-x-1">About</span>
+                    </a>
+                    <a href="https://smkn7baleendah.sch.id/" target="_blank" aria-label="Website"
+                        class="relative font-semibold text-base px-5 py-2 rounded-xl bg-white/20 hover:bg-blue-700 hover:text-white transition-all duration-300 shadow-lg border border-blue-300/30 hover:border-blue-200 scale-100 hover:scale-105 active:scale-95">
+                        <span class="inline-block transition-transform duration-300 group-hover:translate-x-1">Website</span>
+                    </a>
                 </div>
                 <div class="flex gap-5 mt-1 justify-center">
-                    <a href="https://instagram.com/sekolahanda" target="_blank" aria-label="Instagram" class="hover:scale-110 hover:text-pink-400 transition-transform duration-200 bg-white/10 rounded-full p-2 shadow border border-blue-200/30 hover:bg-pink-100/10">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <a href="https://www.instagram.com/smkn7.baleendah/" target="_blank" aria-label="Instagram"
+                        class="group hover:scale-110 transition-transform duration-300 bg-white/20 rounded-full p-2 shadow border border-blue-200/30 hover:bg-pink-100/20 hover:shadow-xl hover:border-pink-300">
+                        <svg class="w-8 h-8 transition-colors duration-300 group-hover:text-pink-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" fill="none"/>
                             <circle cx="12" cy="12" r="5" stroke="currentColor" fill="none"/>
                             <circle cx="17" cy="7" r="1.5" fill="currentColor"/>
                         </svg>
                     </a>
-                    <a href="https://sekolah-anda.sch.id" target="_blank" aria-label="Website" class="hover:scale-110 hover:text-blue-300 transition-transform duration-200 bg-white/10 rounded-full p-2 shadow border border-blue-200/30 hover:bg-blue-100/10">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <circle cx="12" cy="12" r="10" stroke="currentColor" fill="none"/>
-                            <ellipse cx="12" cy="12" rx="4" ry="10" stroke="currentColor" fill="none"/>
-                            <line x1="2" y1="12" x2="22" y2="12" stroke="currentColor"/>
+                    <a href="https://www.instagram.com/axylfff/" target="_blank" aria-label="Instagram"
+                        class="group hover:scale-110 transition-transform duration-300 bg-white/20 rounded-full p-2 shadow border border-blue-200/30 hover:bg-pink-100/20 hover:shadow-xl hover:border-pink-300">
+                        <svg class="w-8 h-8 transition-colors duration-300 group-hover:text-pink-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" fill="none"/>
+                            <circle cx="12" cy="12" r="5" stroke="currentColor" fill="none"/>
+                            <circle cx="17" cy="7" r="1.5" fill="currentColor"/>
+                        </svg>
+                    </a>
+                    <a href="https://github.com/3cvvh" target="_blank" aria-label="GitHub"
+                        class="group hover:scale-110 transition-transform duration-300 bg-white/20 rounded-full p-2 shadow border border-blue-200/30 hover:bg-gray-100/20 hover:shadow-xl hover:border-gray-400">
+                        <svg class="w-8 h-8 transition-colors duration-300 group-hover:text-gray-800" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.867 8.184 6.839 9.504.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.338 1.909-1.295 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.36.31.68.921.68 1.857 0 1.34-.012 2.421-.012 2.751 0 .267.18.577.688.479C19.135 20.2 22 16.447 22 12.021 22 6.484 17.523 2 12 2z"/>
                         </svg>
                     </a>
                 </div>
