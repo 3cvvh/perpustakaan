@@ -12,7 +12,7 @@ if(!isset($_SESSION['login'])){
 
 // Cek role user, hanya admin/petugas yang boleh akses
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'petugas') {
-    header("Location: katalog.php");
+    header("Location: ../view/katalog.php");
     exit;
 }
 // Ambil data peminjaman beserta relasi user dan buku

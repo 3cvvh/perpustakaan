@@ -84,7 +84,7 @@ if (isset($_POST["submit"])) {
                     </option>
                     <option value="Admin" <?php if($aduh_gantengnya["role"] == "Admin") echo "selected"; ?>>Admin</option>
                     <option value="Petugas" <?php if($aduh_gantengnya["role"] == "Petugas") echo "selected"; ?>>Petugas</option>
-                    <option value="Siswa" <?php if($aduh_gantengnya["role"] == "Siswa") echo "selected"; ?>>Siswa</option>
+                    <option value="peminjam" <?php if($aduh_gantengnya["role"] == "peminjam") echo "selected"; ?>>peminjam</option>
                 </select>
             </div>
             <div class="text-center pt-2">

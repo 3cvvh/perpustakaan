@@ -11,7 +11,7 @@ include '../logic/fungsi_select.php';
 // Cek apakah user sudah login, jika belum redirect ke login
 // Cek role user, hanya admin/petugas yang boleh akses
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin' && $_SESSION['role'] !== 'petugas') {
-    header("Location: katalog.php");
+    header("Location: ../view/katalog.php");
     exit;
 }
 // Ambil semua data user dari database
@@ -141,7 +141,7 @@ $admin_name = isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest';
                     <?php
                     $no = 1; 
                     foreach ($user as $u):
-                    if ($u["role"] === 'admin' && $_SESSION['role'] !== 'admin') {
+                    if ($u["role"] === 'admin') {
                         continue; // Skip admin
                     }
                     if ($u["UserID"] === $userID) {

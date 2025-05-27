@@ -2,7 +2,7 @@
 $server = "localhost";
 $username = "root";
 $password = "";
-$database = "perpus_chan";
+$database = "library";
 // Create connection
 $db  = mysqli_connect($server,$username,$password,$database);
 // Check connection

@@ -9,15 +9,6 @@ if(isset($_SESSION['login'])){
         exit;
     }
 }   
-if(isset($_SESSION['role'])){
-    if($_SESSION['role'] === 'admin' || $_SESSION['role'] === 'petugas'){
-        header("Location: index.php");
-        exit;
-    } elseif($_SESSION['role'] === 'peminjam'){
-        header("Location: katalog.php");
-        exit;
-    }
-}
 include '../logic/function.php';
 include '../logic/fungsi_select.php';
 if (!isset($_SESSION['lupa'])) $_SESSION['lupa'] = 0;

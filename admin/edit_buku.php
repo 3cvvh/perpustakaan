@@ -42,7 +42,7 @@ if(isset($_POST["submit"])){
 </head>
 <body>
 <form class="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow" method="post" action="" enctype="multipart/form-data">
-    <h2 class="text-2xl font-bold mb-6">Tambah Buku</h2>
+    <h2 class="text-2xl font-bold mb-6">edit Buku</h2>
     <input type="hidden" name="id" value="<?= htmlspecialchars($aduh_gantengnya['BukuID']) ?>">
     <input type="hidden" name="Foto_lama" value="<?= htmlspecialchars($aduh_gantengnya['Foto']) ?>">
     <div class="mb-4">
