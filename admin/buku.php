@@ -13,7 +13,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin' && $_SESSION['rol
     header("Location: ../view/katalog.php");
     exit;
 }
-// Ambil semua data buku dari database
+// Ambil semua data buku daNri database
 $user = select("SELECT * FROM user");
 $buku = select("SELECT * FROM buku");
 $peminjaman = select("SELECT * FROM peminjaman 

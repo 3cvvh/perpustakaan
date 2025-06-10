@@ -23,6 +23,7 @@ Aplikasi ini bertujuan untuk memudahkan pengelolaan data buku, anggota, dan pemi
 - pengembalian
 - peminjaman
 - ulasan
+- eqil
 
 ## 🚀 Cara Instalasi & Menjalankan
 
