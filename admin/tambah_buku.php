@@ -25,6 +25,7 @@ if(isset($_POST["submit"])){
     if(tambah_buku($_POST) > 0){
         echo "<script>
                 alert('Data berhasil ditambahkan!');
+                document.location.href = 'buku.php';
               </script>";
     // Jika tambah buku gagal
     } elseif(tambah_buku($_POST) < 0) {

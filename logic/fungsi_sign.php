@@ -14,6 +14,12 @@ function sign($post_data){
         echo "<script>alert('Username sudah terdaftar!');</script>";
         return false;
     }
+
+    if (!preg_match('/^[a-zA-Z0-9_]+$/', $username)) {
+        echo "<script>alert('Username hanya boleh mengandung huruf, angka, dan underscore!');</script>";
+        return false;
+    }
+    
     if($password !== $confirm_password) {
         echo "<script>alert('Password dan Confirm Password tidak sama!');</script>";
         return false;

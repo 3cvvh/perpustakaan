@@ -2,7 +2,7 @@
 // Mulai session untuk autentikasi
 session_start();
 if(!isset($_SESSION['login'])) {
-    header("Location: ../view/login.php");
+    header("Location: ../view/halaman_awal.php");
     exit;
 }
 $userID = $_SESSION['UserID'];

@@ -13,27 +13,31 @@ include '../logic/function.php';
 include '../logic/fungsi_select.php';
 if (!isset($_SESSION['lupa'])) $_SESSION['lupa'] = 0;
 if(isset($_POST['submit'])){
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $result =  mysqli_query($db, "SELECT * FROM user WHERE username = '$username'");
-    $row = mysqli_fetch_assoc($result);
-    if($row > 0){
-        if(password_verify($password, $row['Password'])){
-            $_SESSION['name'] = $row['Username'];
-            $_SESSION["role"] = $row["role"];
-            $_SESSION['login'] = true;
-            $_SESSION['UserID'] = $row['UserID'];
-            if ($row['role'] === 'admin' || $row['role'] === 'petugas') {
-                header("Location: ../admin/index.php");
-            } elseif ($row['role'] === 'peminjam') {
-                header("Location: katalog.php");
-            }
-            exit;
+$username = htmlspecialchars($_POST['username']);
+$password = htmlspecialchars($_POST['password']);
+    $stmt = $db->prepare("SELECT * FROM user WHERE username = ?");
+    $stmt->bind_param("s", $_POST['username']);
+    $stmt->execute();
+    $stmt->store_result();
+if($stmt->num_rows > 0){
+    $stmt->bind_result($UserID, $Username, $Password, $Email, $NamaLengkap, $Alamat, $role);
+    $stmt->fetch();
+    if(password_verify($_POST["password"], $Password)){
+        $_SESSION['name'] = $Username;
+        $_SESSION["role"] = $role;
+        $_SESSION['login'] = true;
+        $_SESSION['UserID'] = $UserID;
+        if ($role === 'admin' || $role === 'petugas') {
+            header("Location: ../admin/index.php");
+        } elseif ($role === 'peminjam') {
+            header("Location: katalog.php");
         }
-        $error = true;
-    } else {
-        $error1 = true;
+        exit;
     }
+    $error = true;
+} else {
+    $error1 = true;
+}
     $_SESSION['lupa']++;
 }
 ?>
